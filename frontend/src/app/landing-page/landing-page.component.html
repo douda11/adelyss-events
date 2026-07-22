@@ -1,0 +1,461 @@
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a href="#" class="brand" aria-label="Adelyss Events accueil">
+      <span class="brand-mark" aria-hidden="true">A</span>
+      <span class="brand-text">
+        <span class="brand-name">Adelyss Events</span>
+        <span class="brand-tagline">Événements professionnels, associatifs et privés</span>
+      </span>
+    </a>
+    <nav class="nav" aria-label="Navigation principale">
+      @for (link of navLinks; track link.href) {
+        <a [href]="link.href" class="nav-link">{{ link.label }}</a>
+      }
+    </nav>
+    <div class="header-actions">
+      <a class="btn btn-outline-light btn-admin" href="/admin/login">Espace admin</a>
+      <a class="btn btn-gold header-cta" href="#devis">Demander un devis</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section id="accueil" class="hero">
+    <!-- Remplacez le src par le chemin réel de votre vidéo et audio une fois reçus -->
+    <video autoplay [muted]="true" loop playsinline class="hero-bg-video">
+      <source src="/assets/background-video.mp4" type="video/mp4" />
+    </video>
+    <audio autoplay loop id="bg-music">
+      <source src="/assets/background-music.mp3" type="audio/mpeg" />
+    </audio>
+    <div class="hero-overlay"></div>
+    <div class="wrap hero-content">
+      <p class="eyebrow">Agence événementielle</p>
+      <h1>Vos événements d’exception, de la conception à la réalisation</h1>
+      <p class="lead">
+        Adelyss Events accompagne les entreprises, associations et particuliers pour créer des moments
+        mémorables, avec exigence et sens du détail.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-gold" href="#devis">Parlons de votre projet</a>
+        <a class="btn btn-outline" href="#apropos">Découvrir l’agence</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-cards">
+    <div class="wrap">
+      <h2 class="section-title">Ce que nous faisons</h2>
+      <p class="section-intro">Trois piliers pour couvrir tous vos besoins événementiels.</p>
+      <div class="grid-3">
+        @for (s of services; track s.title) {
+          <article class="card">
+            <h3>{{ s.title }}</h3>
+            <p>{{ s.text }}</p>
+          </article>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section id="apropos" class="section section-about">
+    <div class="wrap about-grid">
+      <div>
+        <h2 class="section-title">À propos</h2>
+        <h3 class="subsection-title">Notre histoire</h3>
+        <p>
+          Née d’une passion pour l’art de recevoir, Adelyss Events s’est construite autour d’équipes
+          terrain expérimentées et d’un réseau de prestataires sélectionnés pour leur fiabilité.
+        </p>
+        <h3 class="subsection-title">Notre vision</h3>
+        <p>
+          Faire de chaque événement une expérience cohérente avec votre image : élégante, fluide et
+          engageante pour vos publics.
+        </p>
+        <h3 class="subsection-title">Nos valeurs</h3>
+        <ul class="values-list">
+          <li><strong>Excellence</strong> — exigence sur la qualité d’exécution</li>
+          <li><strong>Transparence</strong> — budgets et planning clairs</li>
+          <li><strong>Proximité</strong> — un interlocuteur dédié du début à la fin</li>
+        </ul>
+      </div>
+      <aside class="about-aside">
+        <div class="about-panel">
+          <p class="panel-quote">« L’élégance est dans les détails. »</p>
+          <p class="panel-meta">— Notre engagement pour chaque mission</p>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section id="equipe" class="section section-team">
+    <div class="wrap">
+      <h2 class="section-title">Notre équipe</h2>
+      <p class="section-intro">
+        Une équipe pluridisciplinaire qui travaille en synergie pour garantir des événements réussis.
+      </p>
+      <div class="grid-3">
+        @for (member of teamMembers; track member.role) {
+          <article class="card">
+            <h3>{{ member.role }}</h3>
+            <p>{{ member.description }}</p>
+          </article>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section id="recrutement" class="section section-recruitment">
+    <div class="wrap recruitment-grid">
+      <div>
+        <h2 class="section-title">Recrutement</h2>
+        <p class="section-intro">
+          Rejoignez-nous : consultez nos offres d’emploi et déposez votre CV.
+        </p>
+
+        <h3 class="subsection-title">Offres d'emploi</h3>
+        <div class="job-list">
+          @for (offer of jobOffers; track offer.title) {
+            <article class="card card-job">
+              <h4>{{ offer.title }}</h4>
+              <p class="job-meta">{{ offer.location }} · {{ offer.type }}</p>
+              <p>{{ offer.description }}</p>
+            </article>
+          }
+        </div>
+      </div>
+
+      <form class="contact-form" [formGroup]="recruitmentForm" (ngSubmit)="onSubmitRecruitment()">
+        <h3 class="subsection-title form-title">Déposer votre CV</h3>
+        <label>
+          <span>Nom complet</span>
+          <input type="text" formControlName="fullName" autocomplete="name" />
+          @if (recruitmentForm.controls.fullName.touched && recruitmentForm.controls.fullName.invalid) {
+            <small class="error">Champ requis</small>
+          }
+        </label>
+        <label>
+          <span>Email</span>
+          <input type="email" formControlName="email" autocomplete="email" />
+          @if (recruitmentForm.controls.email.touched && recruitmentForm.controls.email.invalid) {
+            <small class="error">Email valide requis</small>
+          }
+        </label>
+        <label>
+          <span>Téléphone</span>
+          <input type="tel" formControlName="phone" autocomplete="tel" />
+        </label>
+        <label>
+          <span>Poste souhaité</span>
+          <input type="text" formControlName="position" placeholder="Ex: Chargé(e) de clientèle" />
+          @if (recruitmentForm.controls.position.touched && recruitmentForm.controls.position.invalid) {
+            <small class="error">Champ requis</small>
+          }
+        </label>
+        <label>
+          <span>Motivation</span>
+          <textarea formControlName="motivation" rows="4" placeholder="Parlez-nous de votre profil..."></textarea>
+          @if (recruitmentForm.controls.motivation.touched && recruitmentForm.controls.motivation.invalid) {
+            <small class="error">Minimum 20 caractères</small>
+          }
+        </label>
+        <label>
+          <span>CV (PDF, DOC, DOCX)</span>
+          <input type="file" accept=".pdf,.doc,.docx" (change)="onCvSelected($event)" />
+          @if (cvFileName) {
+            <small class="api-status">Fichier sélectionné : {{ cvFileName }}</small>
+          }
+        </label>
+        <button type="submit" class="btn btn-gold btn-block">Envoyer ma candidature</button>
+        @if (recruitmentStatus) {
+          <p class="api-status">{{ recruitmentStatus }}</p>
+        }
+      </form>
+    </div>
+  </section>
+
+  <section id="evenements-passes" class="section section-past-events">
+    <div class="wrap">
+      <h2 class="section-title">Événements passés</h2>
+      <p class="section-intro">
+        Un espace dédié à nos réalisations précédentes, avec photos et vidéos.
+      </p>
+      <div class="grid-3">
+        @for (event of pastEvents; track event.title) {
+          <article class="card card-media">
+            @if (event.type === 'video') {
+              <div class="media-frame media-video">
+                <video [src]="event.mediaUrl" controls preload="metadata"></video>
+              </div>
+            } @else {
+              <img [src]="event.mediaUrl" [alt]="event.title" class="media-image" loading="lazy" />
+            }
+            <h3>{{ event.title }}</h3>
+            <p class="news-date">{{ event.type === 'video' ? 'Vidéo' : 'Photo' }}</p>
+            <p>{{ event.description }}</p>
+          </article>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section id="actualites" class="section section-news">
+    <div class="wrap">
+      <h2 class="section-title">Actualités &amp; blog</h2>
+      <p class="section-intro">Idées, retours d’expérience et coulisses de nos événements.</p>
+      <div class="grid-3">
+        @for (n of news; track n.title) {
+          <article class="card card-news">
+            <span class="news-date">{{ n.date }}</span>
+            <h3>{{ n.title }}</h3>
+            <a href="#" class="text-link">Lire la suite</a>
+          </article>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section id="partenariats" class="section section-partners">
+    <div class="wrap partners-inner">
+      <h2 class="section-title">Partenariats &amp; sponsors</h2>
+      <p class="section-intro">
+        Vous souhaitez associer votre marque à des événements de qualité ou sponsoriser une opération ?
+      </p>
+
+      @if (partners && partners.length > 0) {
+        <div class="partners-logos" style="display: flex; gap: 2rem; flex-wrap: wrap; justify-content: center; margin-bottom: 3rem;">
+          @for (p of partners; track p.id) {
+            <a [href]="p.websiteUrl || '#'" target="_blank" [title]="p.name" style="display: block; width: 150px; height: 100px; padding: 1rem; background: white; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); display: flex; align-items: center; justify-content: center; transition: transform 0.2s;">
+              <img [src]="p.logoUrl || '/assets/placeholder-logo.jpg'" [alt]="p.name" style="max-width: 100%; max-height: 100%; object-fit: contain;" />
+            </a>
+          }
+        </div>
+      }
+
+      <div class="grid-2" style="margin-bottom: 3rem;">
+        <article class="card card-highlight">
+          <h3>Devenir partenaire technique</h3>
+          <p>Échangez vos services (traiteur, logistique, sonorisation) contre une forte visibilité sur nos événements premium.</p>
+          <a class="btn btn-outline-light" href="#contact">Proposer un partenariat</a>
+        </article>
+        <article class="card card-highlight">
+          <h3>Devenir Sponsor Officiel</h3>
+          <p>Associez votre image de marque à nos événements prestigieux et touchez directement votre cible B2B et B2C.</p>
+          <a class="btn btn-gold" href="#contact">Demander le dossier complet</a>
+        </article>
+      </div>
+
+      <h3 class="subsection-title" style="text-align: center; margin-bottom: 1.5rem;">Nos offres de Sponsoring</h3>
+      <div class="sponsorship-packs">
+        <article class="pack-card bronze">
+          <div class="pack-header">
+            <h4>Pack Bronze</h4>
+            <span class="pack-price">1 000 TND</span>
+          </div>
+          <ul class="pack-features">
+            <li>✔️ Logo sur tous nos supports digitaux</li>
+            <li>✔️ Remerciements sur les réseaux sociaux</li>
+            <li>✔️ 2 invitations VIP pour l'événement</li>
+          </ul>
+          <a class="btn btn-outline-dark" href="#contact" (click)="contactForm.patchValue({subject: 'partenariat', message: 'Bonjour, je suis intéressé(e) par votre offre de Sponsoring : Pack Bronze (1 000 TND).\n\nVoici quelques informations sur notre entreprise :\n'})">Choisir ce pack</a>
+        </article>
+
+        <article class="pack-card gold recommended">
+          <div class="pack-badge">Le plus populaire</div>
+          <div class="pack-header">
+            <h4>Pack Or</h4>
+            <span class="pack-price">5 000 TND</span>
+          </div>
+          <ul class="pack-features">
+            <li>⭐ <strong>Sponsoring Titre (Naming)</strong></li>
+            <li>⭐ Prise de parole sur scène (5 min)</li>
+            <li>⭐ Stand dédié dans l'espace VIP</li>
+            <li>⭐ 10 invitations VIP coupe-file</li>
+            <li>✔️ Présence logo format MAXI</li>
+          </ul>
+          <a class="btn btn-gold" href="#contact" (click)="contactForm.patchValue({subject: 'partenariat', message: 'Bonjour, je suis intéressé(e) par votre offre de Sponsoring : Pack Or (5 000 TND).\n\nVoici quelques informations sur notre entreprise :\n'})">Choisir ce pack</a>
+        </article>
+
+        <article class="pack-card silver">
+          <div class="pack-header">
+            <h4>Pack Argent</h4>
+            <span class="pack-price">3 000 TND</span>
+          </div>
+          <ul class="pack-features">
+            <li>✔️ Espace Stand (Roll-up autorisé)</li>
+            <li>✔️ Dépôt de goodies dans les sacs cadeaux</li>
+            <li>✔️ Logo sur les écrans de l'événement</li>
+            <li>✔️ 5 invitations VIP</li>
+          </ul>
+          <a class="btn btn-outline-dark" href="#contact" (click)="contactForm.patchValue({subject: 'partenariat', message: 'Bonjour, je suis intéressé(e) par votre offre de Sponsoring : Pack Argent (3 000 TND).\n\nVoici quelques informations sur notre entreprise :\n'})">Choisir ce pack</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="temoignages" class="section section-testimonials">
+    <div class="wrap">
+      <h2 class="section-title">Ils nous font confiance</h2>
+      <p class="section-intro">Témoignages de clients professionnels, associatifs et privés.</p>
+      <div class="grid-3">
+        @for (t of testimonials; track t.author) {
+          <blockquote class="quote-card">
+            <p>“{{ t.quote }}”</p>
+            <footer>— {{ t.author }}</footer>
+          </blockquote>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="section section-contact">
+    <div class="wrap contact-grid">
+      <div>
+        <h2 class="section-title">Contact</h2>
+        <p class="section-intro">
+          Formulaire de contact, demande de devis ou candidature : écrivez-nous, nous revenons vers vous
+          rapidement.
+        </p>
+        <ul class="contact-list">
+          <li>
+            <strong>Email</strong><br />
+            <a href="mailto:contact@adelyss-events.com">contact&#64;adelyss-events.com</a>
+          </li>
+          <li>
+            <strong>Téléphone</strong><br />
+            <a href="tel:+21625944684">25 944 684</a>
+          </li>
+        </ul>
+        <p class="api-demo">
+          <button type="button" class="btn btn-text" (click)="checkApi()">Tester la connexion API</button>
+          @if (apiStatus) {
+            <span class="api-status">{{ apiStatus }}</span>
+          }
+        </p>
+      </div>
+      <form class="contact-form" [formGroup]="contactForm" (ngSubmit)="onSubmitContact()">
+        <label>
+          <span>Nom complet</span>
+          <input type="text" formControlName="name" autocomplete="name" />
+          @if (contactForm.controls.name.touched && contactForm.controls.name.invalid) {
+            <small class="error">Champ requis</small>
+          }
+        </label>
+        <label>
+          <span>Email</span>
+          <input type="email" formControlName="email" autocomplete="email" />
+          @if (contactForm.controls.email.touched && contactForm.controls.email.invalid) {
+            <small class="error">Email valide requis</small>
+          }
+        </label>
+        <label>
+          <span>Téléphone</span>
+          <input type="tel" formControlName="phone" autocomplete="tel" />
+        </label>
+        <label>
+          <span>Objet</span>
+          <select formControlName="subject">
+            <option value="contact">Message général</option>
+            <option value="devis">Demande de devis</option>
+            <option value="recrutement">Recrutement</option>
+            <option value="partenariat">Partenariat / sponsoring</option>
+          </select>
+        </label>
+        <label>
+          <span>Message</span>
+          <textarea formControlName="message" rows="5" placeholder="Décrivez votre besoin…"></textarea>
+          @if (contactForm.controls.message.touched && contactForm.controls.message.invalid) {
+            <small class="error">Minimum 10 caractères</small>
+          }
+        </label>
+        <button type="submit" class="btn btn-gold btn-block">Envoyer</button>
+      </form>
+    </div>
+  </section>
+
+  <section id="devis" class="section section-quote">
+    <div class="wrap quote-grid">
+      <div>
+        <h2 class="section-title">Demande de devis</h2>
+        <p class="section-intro">
+          Décrivez votre besoin et recevez une proposition adaptée à votre événement.
+        </p>
+      </div>
+      <form class="contact-form" [formGroup]="quoteForm" (ngSubmit)="onSubmitQuote()">
+        <label>
+          <span>Nom complet</span>
+          <input type="text" formControlName="fullName" autocomplete="name" />
+          @if (quoteForm.controls.fullName.touched && quoteForm.controls.fullName.invalid) {
+            <small class="error">Champ requis</small>
+          }
+        </label>
+        <label>
+          <span>Email</span>
+          <input type="email" formControlName="email" autocomplete="email" />
+          @if (quoteForm.controls.email.touched && quoteForm.controls.email.invalid) {
+            <small class="error">Email valide requis</small>
+          }
+        </label>
+        <label>
+          <span>Téléphone</span>
+          <input type="tel" formControlName="phone" autocomplete="tel" />
+          @if (quoteForm.controls.phone.touched && quoteForm.controls.phone.invalid) {
+            <small class="error">Champ requis</small>
+          }
+        </label>
+        <label>
+          <span>Type d'événement</span>
+          <input type="text" formControlName="eventType" placeholder="Corporate, mariage, associatif..." />
+          @if (quoteForm.controls.eventType.touched && quoteForm.controls.eventType.invalid) {
+            <small class="error">Champ requis</small>
+          }
+        </label>
+        <label>
+          <span>Budget estimatif</span>
+          <input type="text" formControlName="estimatedBudget" placeholder="Ex: 15 000 TND" />
+          @if (quoteForm.controls.estimatedBudget.touched && quoteForm.controls.estimatedBudget.invalid) {
+            <small class="error">Champ requis</small>
+          }
+        </label>
+        <label>
+          <span>Date prévue</span>
+          <input type="date" formControlName="eventDate" />
+          @if (quoteForm.controls.eventDate.touched && quoteForm.controls.eventDate.invalid) {
+            <small class="error">Champ requis</small>
+          }
+        </label>
+        <label>
+          <span>Détails du besoin</span>
+          <textarea formControlName="details" rows="4" placeholder="Objectifs, nombre d'invités, lieu..."></textarea>
+          @if (quoteForm.controls.details.touched && quoteForm.controls.details.invalid) {
+            <small class="error">Minimum 20 caractères</small>
+          }
+        </label>
+        <button type="submit" class="btn btn-gold btn-block">Envoyer la demande de devis</button>
+        @if (quoteStatus) {
+          <p class="api-status">{{ quoteStatus }}</p>
+        }
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <div class="footer-brand">
+      <span class="brand-mark sm" aria-hidden="true">A</span>
+      <div>
+        <strong>Adelyss Events</strong>
+        <p>Événements professionnels, associatifs et privés</p>
+      </div>
+    </div>
+    <div class="footer-contact">
+      <a href="mailto:contact@adelyss-events.com">contact&#64;adelyss-events.com</a>
+      <span>·</span>
+      <a href="tel:+21625944684">25 944 684</a>
+      <span>·</span>
+      <a href="/admin/login">Espace admin</a>
+    </div>
+    <p class="footer-copy">© {{ year }} Adelyss Events — Démonstration landing page</p>
+  </div>
+</footer>

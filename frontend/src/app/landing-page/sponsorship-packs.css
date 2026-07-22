@@ -1,0 +1,105 @@
+/* Ajout des styles pour les packs de sponsoring à la fin du fichier */
+
+.sponsorship-packs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+@media (max-width: 900px) {
+  .sponsorship-packs {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+.pack-card {
+  background: white;
+  border: 1px solid var(--color-gray-200);
+  border-radius: 16px;
+  padding: 2rem;
+  text-align: center;
+  position: relative;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.pack-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
+}
+
+.pack-header {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--color-gray-100);
+}
+
+.pack-header h4 {
+  margin: 0 0 0.5rem;
+  font-size: 1.25rem;
+  color: var(--color-navy-deep);
+  font-family: var(--font-display);
+}
+
+.pack-price {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--color-gold);
+}
+
+.pack-features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 2rem;
+  text-align: left;
+  flex: 1;
+}
+
+.pack-features li {
+  margin-bottom: 0.8rem;
+  color: var(--color-gray-600);
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.pack-features strong {
+  color: var(--color-navy);
+}
+
+.pack-card.recommended {
+  border: 2px solid var(--color-gold);
+  transform: scale(1.05);
+  box-shadow: 0 10px 25px rgba(201, 162, 39, 0.15);
+  z-index: 2;
+}
+
+@media (max-width: 900px) {
+  .pack-card.recommended {
+    transform: none;
+  }
+}
+
+.pack-card.recommended:hover {
+  transform: scale(1.05) translateY(-5px);
+  box-shadow: 0 20px 40px rgba(201, 162, 39, 0.2);
+}
+
+.pack-badge {
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-gold);
+  color: white;
+  padding: 0.4rem 1rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}

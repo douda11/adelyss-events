@@ -1,0 +1,28 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: 'Lato', system-ui, -apple-system, sans-serif;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+
+:root {
+  --color-navy: #0d1b3a;
+  --color-navy-deep: #0a1428;
+  --color-gold: #c9a227;
+  --color-gold-dark: #a68520;
+  --color-white: #ffffff;
+  --color-bg: #ffffff;
+  --color-text: #1a1f2e;
+  --color-muted: #5c6478;
+  --font-display: 'Playfair Display', Georgia, 'Times New Roman', serif;
+}
