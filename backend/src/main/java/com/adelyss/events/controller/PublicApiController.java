@@ -111,6 +111,38 @@ public class PublicApiController {
       application.setCvUrl("/uploads/cvs/" + uniqueFilename);
 
       JobApplication saved = jobApplicationRepository.save(application);
+
+      // 1. Accusé de réception automatique au candidat
+      String candidateSubject = "Confirmation de réception de votre candidature — Adelyss Events";
+      String candidateBody = "Madame, Monsieur bonjour,\n\n" +
+          "Nous confirmons la bonne réception de votre candidature pour le poste de : " + saved.getPosition() + ".\n\n" +
+          "Notre équipe étudie votre profil avec soin et vous recontactera si votre candidature correspond à nos attentes.\n\n" +
+          "Nous vous remercions de votre intérêt pour Adelyss Events.\n\n" +
+          "L'équipe Recrutement Adelyss Events";
+      try {
+        emailService.send(saved.getEmail(), candidateSubject, candidateBody);
+      } catch (Exception e) {
+        System.err.println("Failed to send candidate confirmation: " + e.getMessage());
+      }
+
+      // 2. Alerte immédiate envoyée à la boîte mail contact@adelyss-events.com
+      String adminSubject = "📥 Nouvelle candidature reçue : " + saved.getFullName() + " (" + saved.getPosition() + ")";
+      String adminBody = "Bonjour,\n\n" +
+          "Une nouvelle candidature a été soumise sur votre site internet :\n\n" +
+          "• Candidat : " + saved.getFullName() + "\n" +
+          "• Email : " + saved.getEmail() + "\n" +
+          "• Téléphone : " + (saved.getPhone() != null && !saved.getPhone().trim().isEmpty() ? saved.getPhone() : "Non renseigné") + "\n" +
+          "• Poste visé : " + saved.getPosition() + "\n\n" +
+          "• Motivation / Message :\n" + (saved.getMotivation() != null ? saved.getMotivation() : "Non renseignée") + "\n\n" +
+          "• Fichier CV enregistré : " + uniqueFilename + "\n\n" +
+          "--------------------------------------------------\n" +
+          "Consultez et téléchargez ce CV sur votre espace admin : https://visionary-kheer-6d169b.netlify.app/admin/recruitment/applications";
+      try {
+        emailService.send("contact@adelyss-events.com", adminSubject, adminBody);
+      } catch (Exception e) {
+        System.err.println("Failed to send admin application notification: " + e.getMessage());
+      }
+
       return ResponseEntity.ok(saved);
 
     } catch (IOException e) {
@@ -122,6 +154,7 @@ public class PublicApiController {
   public ResponseEntity<ContactMessage> submitContact(@RequestBody ContactMessage contactMessage) {
     ContactMessage saved = contactMessageRepository.save(contactMessage);
     
+    // 1. Accusé de réception automatique au visiteur
     String subject = "Merci pour votre message !";
     String body = "Madame, Monsieur bonjour,\n\n" +
                   "Merci de nous avoir contactés.\n\n" +
@@ -133,6 +166,22 @@ public class PublicApiController {
       emailService.send(saved.getEmail(), subject, body);
     } catch (Exception e) {
       System.err.println("Failed to send auto-reply: " + e.getMessage());
+    }
+
+    // 2. Alerte immédiate envoyée à la boîte mail contact@adelyss-events.com
+    String adminSubject = "💬 Nouveau message de contact : " + saved.getName();
+    String adminBody = "Bonjour,\n\n" +
+        "Un nouveau message de contact a été reçu sur le site :\n\n" +
+        "• Nom & Prénom : " + saved.getName() + "\n" +
+        "• Email : " + saved.getEmail() + "\n" +
+        "• Téléphone : " + (saved.getPhone() != null && !saved.getPhone().trim().isEmpty() ? saved.getPhone() : "Non renseigné") + "\n\n" +
+        "• Message du visiteur :\n" + saved.getMessage() + "\n\n" +
+        "--------------------------------------------------\n" +
+        "Vous pouvez répondre directement depuis votre espace admin : https://visionary-kheer-6d169b.netlify.app/admin/messages";
+    try {
+      emailService.send("contact@adelyss-events.com", adminSubject, adminBody);
+    } catch (Exception e) {
+      System.err.println("Failed to send admin contact notification: " + e.getMessage());
     }
     
     return ResponseEntity.ok(saved);
