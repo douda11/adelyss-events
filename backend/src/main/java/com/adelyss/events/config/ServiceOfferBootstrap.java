@@ -21,23 +21,23 @@ public class ServiceOfferBootstrap {
     }
 
     serviceOfferRepository.save(new ServiceOffer(
-        "Événements professionnels",
-        "Séminaires, conventions, lancements produit et team building sur mesure.",
-        "🏢",
+        "Evenements professionnels",
+        "Seminaires, conventions, lancements produit et team building sur mesure.",
+        "\uD83C\uDFE2",
         1
     ));
 
     serviceOfferRepository.save(new ServiceOffer(
-        "Événements privés",
-        "Mariages, anniversaires et célébrations avec une scénographie soignée.",
-        "💍",
+        "Evenements prives",
+        "Mariages, anniversaires et celebrations avec une scenographie soignee.",
+        "\uD83D\uDC8D",
         2
     ));
 
     serviceOfferRepository.save(new ServiceOffer(
         "Nos prestations",
-        "Logistique, décoration, coordination jour J et partenaires de confiance.",
-        "✨",
+        "Logistique, decoration, coordination jour J et partenaires de confiance.",
+        "\u2728",
         3
     ));
   }
