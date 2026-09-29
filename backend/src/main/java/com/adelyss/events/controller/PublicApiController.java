@@ -26,6 +26,7 @@ public class PublicApiController {
   private final PartnerRepository partnerRepository;
   private final JobApplicationRepository jobApplicationRepository;
   private final ContactMessageRepository contactMessageRepository;
+  private final ServiceOfferRepository serviceOfferRepository;
   private final EmailService emailService;
 
   private final Path cvUploadDir = Paths.get("uploads/cvs");
@@ -37,6 +38,7 @@ public class PublicApiController {
       PartnerRepository partnerRepository,
       JobApplicationRepository jobApplicationRepository,
       ContactMessageRepository contactMessageRepository,
+      ServiceOfferRepository serviceOfferRepository,
       EmailService emailService) throws IOException {
     this.eventRepository = eventRepository;
     this.teamMemberRepository = teamMemberRepository;
@@ -44,6 +46,7 @@ public class PublicApiController {
     this.partnerRepository = partnerRepository;
     this.jobApplicationRepository = jobApplicationRepository;
     this.contactMessageRepository = contactMessageRepository;
+    this.serviceOfferRepository = serviceOfferRepository;
     this.emailService = emailService;
     
     if (!Files.exists(cvUploadDir)) {
@@ -69,6 +72,11 @@ public class PublicApiController {
   @GetMapping("/public/partners")
   public List<Partner> getPublicPartners() {
     return partnerRepository.findAll();
+  }
+
+  @GetMapping("/public/services")
+  public List<ServiceOffer> getPublicServices() {
+    return serviceOfferRepository.findByActiveTrueOrderByDisplayOrderAsc();
   }
 
   @PostMapping("/recruitment/applications")

@@ -21,6 +21,7 @@ export const routes: Routes = [
       { path: 'recruitment/offers', loadComponent: () => import('./admin/admin-job-offers.component').then(m => m.AdminJobOffersComponent) },
       { path: 'recruitment/applications', loadComponent: () => import('./admin/admin-applications.component').then(m => m.AdminApplicationsComponent) },
       { path: 'partners', loadComponent: () => import('./admin/admin-partners.component').then(m => m.AdminPartnersComponent) },
+      { path: 'services', loadComponent: () => import('./admin/admin-services.component').then(m => m.AdminServicesComponent) },
       { path: 'messages', loadComponent: () => import('./admin/admin-messages.component').then(m => m.AdminMessagesComponent) }
     ]
   },

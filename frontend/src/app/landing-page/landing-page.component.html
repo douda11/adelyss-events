@@ -46,10 +46,13 @@
   <section class="section section-cards">
     <div class="wrap">
       <h2 class="section-title">Ce que nous faisons</h2>
-      <p class="section-intro">Trois piliers pour couvrir tous vos besoins événementiels.</p>
+      <p class="section-intro">Des prestations sur mesure pour couvrir tous vos besoins événementiels.</p>
       <div class="grid-3">
         @for (s of services; track s.title) {
           <article class="card">
+            @if (s.icon) {
+              <div class="card-icon" style="font-size: 2.2rem; margin-bottom: 0.8rem;">{{ s.icon }}</div>
+            }
             <h3>{{ s.title }}</h3>
             <p>{{ s.text }}</p>
           </article>

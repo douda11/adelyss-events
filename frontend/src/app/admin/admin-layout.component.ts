@@ -37,6 +37,9 @@ import { AdminAuthService } from './admin-auth.service';
           <a routerLink="/admin/partners" routerLinkActive="active" class="menu-link">
             <i class="icon">🤝</i> Réseau (Partenaires)
           </a>
+          <a routerLink="/admin/services" routerLinkActive="active" class="menu-link">
+            <i class="icon">🛎️</i> Prestations
+          </a>
           <a routerLink="/admin/messages" routerLinkActive="active" class="menu-link" style="margin-top: 1rem; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1rem;">
             <i class="icon">💬</i> Messages reçus
           </a>

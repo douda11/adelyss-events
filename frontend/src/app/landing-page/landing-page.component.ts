@@ -27,18 +27,21 @@ export class LandingPageComponent implements OnInit {
     { href: '#contact', label: 'Contact' },
   ];
 
-  readonly services = [
+  services: {title: string, text: string, icon?: string}[] = [
     {
       title: 'Événements professionnels',
       text: 'Séminaires, conventions, lancements produit et team building sur mesure.',
+      icon: '🏢',
     },
     {
       title: 'Événements privés',
       text: 'Mariages, anniversaires et célébrations avec une scénographie soignée.',
+      icon: '💍',
     },
     {
       title: 'Nos prestations',
       text: 'Logistique, décoration, coordination jour J et partenaires de confiance.',
+      icon: '✨',
     },
   ];
 
@@ -93,6 +96,14 @@ export class LandingPageComponent implements OnInit {
     this.http.get<any[]>('/api/public/partners').subscribe({
       next: (data) => this.partners = data,
       error: () => console.error('Failed to load partners')
+    });
+    this.http.get<any[]>('/api/public/services').subscribe({
+      next: (data) => {
+        if (data && data.length > 0) {
+          this.services = data.map(s => ({ title: s.title, text: s.description, icon: s.icon }));
+        }
+      },
+      error: () => console.error('Failed to load services')
     });
   }
 
