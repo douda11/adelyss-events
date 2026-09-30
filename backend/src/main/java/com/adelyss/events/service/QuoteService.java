@@ -49,7 +49,7 @@ public class QuoteService {
         "• Email : " + saved.getEmail() + "\n" +
         "• Téléphone : " + (saved.getPhone() != null && !saved.getPhone().trim().isEmpty() ? saved.getPhone() : "Non renseigné") + "\n" +
         "• Type d'événement : " + (saved.getEventType() != null ? saved.getEventType() : "Non précisé") + "\n" +
-        "• Date prévue : " + (saved.getEventDate() != null && !saved.getEventDate().trim().isEmpty() ? saved.getEventDate() : "Non précisée") + "\n" +
+        "• Date prévue : " + (saved.getEventDate() != null ? saved.getEventDate().toString() : "Non précisée") + "\n" +
         "• Budget estimé : " + (saved.getEstimatedBudget() != null ? saved.getEstimatedBudget() + " TND" : "Non précisé") + "\n\n" +
         "• Détails du besoin :\n" + (saved.getDetails() != null ? saved.getDetails() : "Aucun détail fourni") + "\n\n" +
         "--------------------------------------------------\n" +
