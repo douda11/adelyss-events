@@ -17,33 +17,92 @@ export class LandingPageComponent implements OnInit {
 
   readonly navLinks = [
     { href: '#accueil', label: 'Accueil' },
+    { href: '#pourquoi-un-evenement', label: 'Pourquoi un événement ?' },
+    { href: '#prestations', label: 'Nos prestations' },
     { href: '#apropos', label: 'À propos' },
     { href: '#equipe', label: 'Notre équipe' },
     { href: '#recrutement', label: 'Recrutement' },
-    { href: '#evenements-passes', label: 'Événements passés' },
-    { href: '#actualites', label: 'Actualités' },
+    { href: '#evenements-passes', label: 'Événements' },
     { href: '#partenariats', label: 'Partenariats' },
     { href: '#temoignages', label: 'Témoignages' },
     { href: '#contact', label: 'Contact' },
   ];
 
-  services: {title: string, text: string, icon?: string}[] = [
+  prestations = [
     {
-      title: 'Événements professionnels',
-      text: 'Séminaires, conventions, lancements produit et team building sur mesure.',
+      id: 'team-building',
+      title: 'TEAM BUILDING',
+      subtitle: 'Créer du lien, renforcer la cohésion',
+      icon: '🤝',
+      intro: `Parce qu'une équipe soudée est aussi une équipe qui sait partager des moments en dehors du cadre habituel de travail.
+
+Nous imaginons des journées de team building adaptées à vos équipes : activités collaboratives, challenges, jeux, animations, moments de détente et expériences originales.`,
+      checklistTitle: 'Nous pouvons prendre en charge :',
+      checklist: [
+        'Recherche et sélection du lieu idéal',
+        'Création du programme sur mesure',
+        'Activités et challenges d’équipe immersifs',
+        'Animations professionnelles & team building',
+        'Restauration, pauses café et cocktails',
+        'Coordination des différents intervenants',
+        'Organisation et suivi complet du jour J'
+      ],
+      goal: 'Offrir aux collaborateurs une véritable parenthèse collective, propice aux échanges, à la convivialité et à la cohésion.',
+      expanded: true
+    },
+    {
+      id: 'seminaires',
+      title: 'SÉMINAIRES',
+      subtitle: 'Travailler autrement, ensemble',
       icon: '🏢',
+      intro: `Un séminaire est l'occasion de réunir les équipes dans un environnement différent pour travailler, échanger, réfléchir et partager.
+
+Adelyss Events vous accompagne dans l'organisation de séminaires professionnels adaptés à vos objectifs.
+
+De la recherche du lieu à la coordination du programme, nous construisons un événement qui alterne efficacement temps de travail, moments de convivialité et expériences collectives.`,
+      checklistTitle: 'Selon vos besoins :',
+      checklist: [
+        'Séminaires résidentiels ou à la journée',
+        'Salles de réunion équipées et modulables',
+        'Accueil personnalisé des participants',
+        'Pauses café et collations soignées',
+        'Déjeuners d’affaires et dîners de gala',
+        'Activités de cohésion & ateliers de travail',
+        'Animations thématiques',
+        'Coordination logistique de A à Z'
+      ],
+      goal: 'Concilier efficacité de travail et renforcement de l’esprit d’équipe dans un cadre propice à l’inspiration.',
+      expanded: false
     },
     {
-      title: 'Événements privés',
-      text: 'Mariages, anniversaires et célébrations avec une scénographie soignée.',
-      icon: '💍',
-    },
-    {
-      title: 'Nos prestations',
-      text: 'Logistique, décoration, coordination jour J et partenaires de confiance.',
-      icon: '✨',
-    },
+      id: 'conferences',
+      title: 'CONFÉRENCES & RENCONTRES PROFESSIONNELLES',
+      subtitle: 'Donner de l’impact à vos rendez-vous professionnels',
+      icon: '🎤',
+      intro: `Conférence, présentation, réunion importante, rencontre avec des partenaires ou événement corporate : chaque détail participe à l'image de votre entreprise.
+
+Nous vous accompagnons dans la mise en place d'un événement fluide, élégant et résolument professionnel.
+
+De l'accueil des participants à la coordination sur place, nous veillons à ce que chaque étape soit pensée avec une précision absolue.`,
+      tags: [
+        'Lieu prestigieux',
+        'Concept sur mesure',
+        'Scénographie & Décoration',
+        'Restauration haut de gamme',
+        'Animation & Modération',
+        'Régie & Logistique',
+        'Coordination jour J'
+      ],
+      goal: 'Chez Adelyss Events, nous partons de votre idée et construisons autour d’elle. Bref, vous avez l’idée ? Nous créons l’expérience.',
+      expanded: false
+    }
   ];
+
+  togglePrestation(index: number): void {
+    this.prestations[index].expanded = !this.prestations[index].expanded;
+  }
+
+  services: {title: string, text: string, icon?: string}[] = [];
 
   readonly news = [
     { title: 'Tendances 2026 pour vos événements corporate', date: 'Mars 2026' },

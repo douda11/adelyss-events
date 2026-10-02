@@ -30,62 +30,164 @@
     </audio>
     <div class="hero-overlay"></div>
     <div class="wrap hero-content">
-      <p class="eyebrow">Agence événementielle</p>
-      <h1>Vos événements d’exception, de la conception à la réalisation</h1>
+      <p class="eyebrow">Bienvenue chez Adelyss Events</p>
+      <h1>Chez Adelyss Events, nous savons qu'un événement professionnel peut faire bien plus que réunir des personnes.</h1>
       <p class="lead">
-        Adelyss Events accompagne les entreprises, associations et particuliers pour créer des moments
-        mémorables, avec exigence et sens du détail.
+        Nous imaginons, organisons et coordonnons des événements professionnels sur mesure pour créer du lien, marquer les esprits et donner du sens à chaque rencontre.
       </p>
       <div class="hero-actions">
-        <a class="btn btn-gold" href="#devis">Parlons de votre projet</a>
-        <a class="btn btn-outline" href="#apropos">Découvrir l’agence</a>
+        <a class="btn btn-gold" href="#devis">Demander un devis</a>
+        <a class="btn btn-outline" href="#prestations">Découvrir nos prestations</a>
       </div>
     </div>
   </section>
 
-  <section class="section section-cards">
+  <!-- Section : Pourquoi organiser un événement pour ses équipes ? -->
+  <section id="pourquoi-un-evenement" class="section section-why-event">
     <div class="wrap">
-      <h2 class="section-title">Ce que nous faisons</h2>
-      <p class="section-intro">Des prestations sur mesure pour couvrir tous vos besoins événementiels.</p>
-      <div class="grid-3">
-        @for (s of services; track s.title) {
-          <article class="card">
-            @if (s.icon) {
-              <div class="card-icon" style="font-size: 2.2rem; margin-bottom: 0.8rem;">{{ s.icon }}</div>
+      <div class="why-header">
+        <p class="eyebrow-gold">POURQUOI ORGANISER UN ÉVÉNEMENT POUR SES ÉQUIPES ?</p>
+        <h2 class="section-title">Parce qu’une équipe ne se construit pas uniquement autour d’un bureau, de réunions et d’objectifs à atteindre.</h2>
+        <p class="section-intro">
+          Un événement professionnel permet de sortir du quotidien, créer du lien et offrir aux collaborateurs un autre cadre pour se retrouver et échanger.
+        </p>
+        <p class="why-subintro">
+          Un team building, un séminaire, une journée d’équipe ou simplement un moment convivial peut contribuer à :
+        </p>
+      </div>
+
+      <div class="why-cards-grid">
+        <article class="why-card">
+          <div class="why-icon-badge">🤝</div>
+          <h3>Renforcer la cohésion</h3>
+          <p>Créer des interactions différentes et favoriser une meilleure connaissance entre les membres de l’équipe.</p>
+        </article>
+
+        <article class="why-card">
+          <div class="why-icon-badge">💬</div>
+          <h3>Faciliter les échanges</h3>
+          <p>Offrir un cadre moins formel, propice au partage d'idées, à la confiance et à une communication fluide.</p>
+        </article>
+
+        <article class="why-card">
+          <div class="why-icon-badge">🎯</div>
+          <h3>Fédérer et motiver</h3>
+          <p>Valoriser les collaborateurs, célébrer les réussites communes et stimuler une dynamique collective durable.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section : Nos Prestations (Ligne par ligne, clic pour déplier les détails) -->
+  <section id="prestations" class="section section-prestations">
+    <div class="wrap">
+      <div class="prestations-header-center">
+        <p class="eyebrow-gold">NOS PRESTATIONS</p>
+        <h2 class="section-title">Des événements pensés pour vos objectifs</h2>
+        <p class="section-intro">
+          Chez Adelyss Events, chaque événement est imaginé selon votre entreprise, votre public, vos objectifs et votre budget.<br />
+          De la conception à la coordination du jour J, nous vous accompagnons pour créer un événement cohérent, élégant et mémorable.
+        </p>
+        <p class="hint-click">👇 <em>Cliquez sur une prestation pour afficher tous ses détails et prestations incluses</em></p>
+      </div>
+
+      <div class="prestations-accordion">
+        @for (p of prestations; track p.id; let idx = $index) {
+          <article class="prestation-row-card" [class.is-open]="p.expanded">
+            <div class="prestation-row-header" (click)="togglePrestation(idx)" role="button" tabindex="0">
+              <div class="row-left">
+                <span class="row-icon">{{ p.icon }}</span>
+                <div class="row-text">
+                  <h3 class="row-title">{{ p.title }}</h3>
+                  <p class="row-subtitle">{{ p.subtitle }}</p>
+                </div>
+              </div>
+              <div class="row-right">
+                <span class="row-btn-label">{{ p.expanded ? 'Fermer les détails' : 'Voir les détails' }}</span>
+                <span class="row-arrow">{{ p.expanded ? '▲' : '▼' }}</span>
+              </div>
+            </div>
+
+            @if (p.expanded) {
+              <div class="prestation-row-body">
+                <div class="body-inner">
+                  <div class="body-intro">
+                    <p style="white-space: pre-line;">{{ p.intro }}</p>
+                  </div>
+
+                  @if (p.checklist && p.checklist.length > 0) {
+                    <div class="body-checklist-section">
+                      <h4 class="checklist-title">{{ p.checklistTitle }}</h4>
+                      <ul class="checklist-items">
+                        @for (item of p.checklist; track item) {
+                          <li>
+                            <span class="check-icon">✓</span>
+                            <span>{{ item }}</span>
+                          </li>
+                        }
+                      </ul>
+                    </div>
+                  }
+
+                  @if (p.tags && p.tags.length > 0) {
+                    <div class="body-tags-section">
+                      <h4 class="checklist-title">Notre accompagnement complet :</h4>
+                      <div class="tags-container">
+                        @for (tag of p.tags; track tag) {
+                          <span class="tag-badge">{{ tag }}</span>
+                        }
+                      </div>
+                    </div>
+                  }
+
+                  @if (p.goal) {
+                    <div class="body-goal-highlight">
+                      <strong>{{ p.goal }}</strong>
+                    </div>
+                  }
+
+                  <div class="body-action-footer">
+                    <a href="#devis" class="btn btn-gold btn-sm">Demander un devis pour ce projet</a>
+                  </div>
+                </div>
+              </div>
             }
-            <h3>{{ s.title }}</h3>
-            <p>{{ s.text }}</p>
           </article>
         }
       </div>
     </div>
   </section>
 
+  <!-- Section : À propos -->
   <section id="apropos" class="section section-about">
     <div class="wrap about-grid">
-      <div>
-        <h2 class="section-title">À propos</h2>
-        <h3 class="subsection-title">Notre histoire</h3>
-        <p>
-          Née d’une passion pour l’art de recevoir, Adelyss Events s’est construite autour d’équipes
-          terrain expérimentées et d’un réseau de prestataires sélectionnés pour leur fiabilité.
-        </p>
-        <h3 class="subsection-title">Notre vision</h3>
-        <p>
-          Faire de chaque événement une expérience cohérente avec votre image : élégante, fluide et
-          engageante pour vos publics.
-        </p>
-        <h3 class="subsection-title">Nos valeurs</h3>
-        <ul class="values-list">
-          <li><strong>Excellence</strong> — exigence sur la qualité d’exécution</li>
-          <li><strong>Transparence</strong> — budgets et planning clairs</li>
-          <li><strong>Proximité</strong> — un interlocuteur dédié du début à la fin</li>
-        </ul>
+      <div class="about-content-left">
+        <p class="eyebrow-gold">À PROPOS</p>
+        <h2 class="section-title">Transformer chaque événement en une expérience qui a du sens et qui marque les esprits.</h2>
+        
+        <div class="about-text-blocks">
+          <p>
+            <strong>Adelyss Events</strong> est une agence événementielle qui imagine, organise et coordonne des événements professionnels sur mesure.
+          </p>
+          <p>
+            Notre ambition est simple : <em>transformer chaque événement en une expérience qui a du sens et qui marque les esprits</em>.
+          </p>
+          <p>
+            Parce qu’un événement professionnel ne se résume pas à un lieu, une décoration ou un programme, nous accordons une attention particulière à chaque détail : <strong>l’accueil, l’ambiance, l’organisation, les animations et l’expérience vécue par les participants</strong>.
+          </p>
+          <p>
+            Adelyss Events accompagne les entreprises dans la conception d’événements élégants, cohérents et adaptés à leurs objectifs, qu’il s’agisse de fédérer une équipe, valoriser une entreprise, accueillir de nouveaux collaborateurs ou célébrer une étape clé.
+          </p>
+        </div>
       </div>
+
       <aside class="about-aside">
         <div class="about-panel">
-          <p class="panel-quote">« L’élégance est dans les détails. »</p>
-          <p class="panel-meta">— Notre engagement pour chaque mission</p>
+          <p class="panel-quote">« Vous avez l’idée ?<br>Nous créons l’expérience. »</p>
+          <p class="panel-meta">— L'engagement Adelyss Events</p>
+          <div class="about-pill-signature">
+            <span>Lieu</span> • <span>Concept</span> • <span>Scénographie</span> • <span>Coordination Jour J</span>
+          </div>
         </div>
       </aside>
     </div>
