@@ -117,11 +117,19 @@
   color: rgba(255, 255, 255, 0.88);
   text-decoration: none;
   font-size: 0.9rem;
-  transition: color 0.2s;
+  transition: color 0.2s, border-color 0.2s;
+  padding-bottom: 3px;
+  border-bottom: 2px solid transparent;
 }
 
 .nav-link:hover {
   color: var(--color-gold);
+}
+
+.nav-link.active {
+  color: var(--color-gold);
+  font-weight: 700;
+  border-bottom-color: var(--color-gold);
 }
 
 .header-cta {
@@ -1510,6 +1518,71 @@
   transform: scale(1.15);
   background: #fff;
 }
+
+/* ========================================================
+   CARTES DE NAVIGATION RAPIDE SUR LA PAGE D'ACCUEIL
+   ======================================================== */
+
+.hero-quick-nav {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.2rem;
+  margin-top: 3.5rem;
+  width: 100%;
+  max-width: 1050px;
+}
+
+@media (max-width: 900px) {
+  .hero-quick-nav {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 550px) {
+  .hero-quick-nav {
+    grid-template-columns: 1fr;
+  }
+}
+
+.quick-nav-card {
+  background: rgba(13, 27, 58, 0.7);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(201, 162, 39, 0.35);
+  border-radius: 14px;
+  padding: 1.4rem 1.2rem;
+  text-align: left;
+  cursor: pointer;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+
+.quick-nav-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--color-gold);
+  background: rgba(13, 27, 58, 0.9);
+  box-shadow: 0 10px 25px rgba(201, 162, 39, 0.2);
+}
+
+.quick-icon {
+  font-size: 1.8rem;
+  display: block;
+  margin-bottom: 0.6rem;
+}
+
+.quick-nav-card strong {
+  display: block;
+  color: #fff;
+  font-size: 1.05rem;
+  margin-bottom: 0.3rem;
+  font-weight: 700;
+}
+
+.quick-nav-card p {
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.85rem;
+  margin: 0;
+  line-height: 1.4;
+}
+
 
 
 

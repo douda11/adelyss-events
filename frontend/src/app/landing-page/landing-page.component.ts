@@ -15,19 +15,26 @@ export class LandingPageComponent implements OnInit {
 
   readonly year = new Date().getFullYear();
 
+  activeSection = 'accueil';
+
   readonly navLinks = [
-    { href: '#accueil', label: 'Accueil' },
-    { href: '#pourquoi-un-evenement', label: 'Pourquoi un événement ?' },
-    { href: '#prestations', label: 'Nos prestations' },
-    { href: '#accompagnement', label: 'Notre accompagnement' },
-    { href: '#apropos', label: 'À propos' },
-    { href: '#equipe', label: 'Notre équipe' },
-    { href: '#recrutement', label: 'Recrutement' },
-    { href: '#evenements-passes', label: 'Événements' },
-    { href: '#partenariats', label: 'Partenariats' },
-    { href: '#temoignages', label: 'Témoignages' },
-    { href: '#contact', label: 'Contact' },
+    { id: 'accueil', label: 'Accueil' },
+    { id: 'pourquoi-un-evenement', label: 'Pourquoi un événement ?' },
+    { id: 'prestations', label: 'Nos prestations' },
+    { id: 'accompagnement', label: 'Notre accompagnement' },
+    { id: 'apropos', label: 'À propos' },
+    { id: 'equipe', label: 'Notre équipe' },
+    { id: 'recrutement', label: 'Recrutement' },
+    { id: 'evenements-passes', label: 'Événements' },
+    { id: 'partenariats', label: 'Partenariats' },
+    { id: 'temoignages', label: 'Témoignages' },
+    { id: 'contact', label: 'Contact' },
   ];
+
+  setSection(id: string): void {
+    this.activeSection = id;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 
   readonly steps = [
     {
