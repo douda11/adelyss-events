@@ -19,6 +19,7 @@ export class LandingPageComponent implements OnInit {
     { href: '#accueil', label: 'Accueil' },
     { href: '#pourquoi-un-evenement', label: 'Pourquoi un événement ?' },
     { href: '#prestations', label: 'Nos prestations' },
+    { href: '#accompagnement', label: 'Notre accompagnement' },
     { href: '#apropos', label: 'À propos' },
     { href: '#equipe', label: 'Notre équipe' },
     { href: '#recrutement', label: 'Recrutement' },
@@ -26,6 +27,39 @@ export class LandingPageComponent implements OnInit {
     { href: '#partenariats', label: 'Partenariats' },
     { href: '#temoignages', label: 'Témoignages' },
     { href: '#contact', label: 'Contact' },
+  ];
+
+  readonly steps = [
+    {
+      number: '01',
+      title: 'Échange sur votre projet',
+      icon: '💬',
+      description: 'Écoute approfondie de vos besoins, de vos objectifs, du profil de vos invités et de votre budget.'
+    },
+    {
+      number: '02',
+      title: 'Conception',
+      icon: '💡',
+      description: 'Création du concept, sélection des lieux les plus adaptés et élaboration d’un programme sur mesure.'
+    },
+    {
+      number: '03',
+      title: 'Proposition & devis',
+      icon: '📋',
+      description: 'Présentation d’un dossier complet, transparent et détaillé, affiné jusqu’à votre entière validation.'
+    },
+    {
+      number: '04',
+      title: 'Préparation',
+      icon: '⚙️',
+      description: 'Rétroplanning millimétré, logistique, réservations et coordination rigoureuse des prestataires partenaires.'
+    },
+    {
+      number: '05',
+      title: 'Coordination du jour J',
+      icon: '🏆',
+      description: 'Supervision sur place, régie, accueil soigné et maîtrise du timing pour vous faire vivre une expérience sereine.'
+    }
   ];
 
   prestations = [

@@ -158,6 +158,42 @@
     </div>
   </section>
 
+  <!-- Section : Notre accompagnement (5 étapes) -->
+  <section id="accompagnement" class="section section-process">
+    <div class="wrap">
+      <div class="process-header">
+        <p class="eyebrow-gold">NOTRE MÉTHODOLOGIE</p>
+        <h2 class="section-title">Notre accompagnement</h2>
+        <p class="section-intro">
+          De la première prise de contact jusqu'à la clôture du jour J, nous orchestrons chaque étape avec rigueur, écoute et exigence.
+        </p>
+      </div>
+
+      <div class="steps-flow">
+        @for (s of steps; track s.number; let last = $last) {
+          <div class="step-card">
+            <div class="step-top">
+              <span class="step-num">{{ s.number }}</span>
+              <span class="step-icon">{{ s.icon }}</span>
+            </div>
+            <div class="step-content">
+              <h3 class="step-title">{{ s.title }}</h3>
+              <p class="step-desc">{{ s.description }}</p>
+            </div>
+            @if (!last) {
+              <div class="step-arrow" aria-hidden="true">➔</div>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="process-cta-box">
+        <p class="process-cta-text">Vous avez un projet en tête ? Parlons-en ensemble.</p>
+        <a href="#devis" class="btn btn-gold">1. Démarrer par un échange sur votre projet</a>
+      </div>
+    </div>
+  </section>
+
   <!-- Section : À propos -->
   <section id="apropos" class="section section-about">
     <div class="wrap about-grid">
