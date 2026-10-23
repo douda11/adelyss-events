@@ -11,7 +11,7 @@ import { AdminAuthService } from './admin-auth.service';
     <section class="admin-shell">
       <aside class="admin-sidebar">
         <div class="admin-brand">
-          <span class="brand-mark">A</span>
+          <img src="/assets/logo.jpg" alt="Logo Adelyss Events" class="admin-logo-img" />
           <div>
             <h2>Adelyss Admin</h2>
             <p>Backoffice Pro</p>
@@ -85,18 +85,13 @@ import { AdminAuthService } from './admin-auth.service';
         margin-bottom: 1.5rem;
       }
 
-      .brand-mark {
-        width: 3rem;
+      .admin-logo-img {
         height: 3rem;
-        border-radius: 12px;
-        background: linear-gradient(135deg, #d4af37 0%, #aa8410 100%);
-        display: grid;
-        place-items: center;
-        color: #fff;
-        font-family: 'Inter', sans-serif;
-        font-weight: 800;
-        font-size: 1.4rem;
-        box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+        width: auto;
+        border-radius: 8px;
+        border: 1px solid rgba(212, 175, 55, 0.4);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        object-fit: contain;
       }
 
       .admin-brand h2 {

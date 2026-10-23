@@ -35,6 +35,25 @@
   color: inherit;
 }
 
+.brand-logo-img {
+  height: 3.6rem;
+  width: auto;
+  object-fit: contain;
+  border-radius: 8px;
+  border: 1px solid rgba(201, 162, 39, 0.35);
+  box-shadow: 0 0 15px rgba(201, 162, 39, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.brand:hover .brand-logo-img {
+  transform: scale(1.05);
+  box-shadow: 0 0 22px rgba(201, 162, 39, 0.45);
+}
+
+.brand-logo-img.sm {
+  height: 2.6rem;
+}
+
 .brand-mark {
   width: 3.2rem;
   height: 3.2rem;

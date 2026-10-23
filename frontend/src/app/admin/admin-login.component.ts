@@ -13,7 +13,7 @@ import { AdminAuthService } from './admin-auth.service';
       <div class="admin-login-overlay"></div>
       <div class="admin-login-card">
         <div class="brand">
-          <span class="brand-mark">A</span>
+          <img src="/assets/logo.jpg" alt="Logo Adelyss Events" class="admin-login-logo" />
           <div>
             <p class="brand-title">Adelyss Events</p>
             <p class="brand-subtitle">Administration</p>
@@ -82,16 +82,13 @@ import { AdminAuthService } from './admin-auth.service';
         margin-bottom: 1.25rem;
       }
 
-      .brand-mark {
-        width: 2.5rem;
-        height: 2.5rem;
-        border-radius: 999px;
-        display: grid;
-        place-items: center;
-        border: 2px solid var(--color-gold);
-        color: var(--color-gold);
-        font-family: var(--font-display);
-        font-size: 1.2rem;
+      .admin-login-logo {
+        height: 3rem;
+        width: auto;
+        border-radius: 8px;
+        border: 1px solid rgba(212, 175, 55, 0.4);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        object-fit: contain;
       }
 
       .brand-title {
