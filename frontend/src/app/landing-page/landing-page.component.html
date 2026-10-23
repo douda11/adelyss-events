@@ -194,6 +194,13 @@
     </div>
   </section>
 
+  <!-- Ruban signature officiel calligraphie dorée -->
+  <div class="brand-ribbon-divider">
+    <div class="wrap text-center">
+      <img src="/assets/adelyss-signature-banner.jpg" alt="Calligraphie officielle Adelyss Events" class="ribbon-signature-img" />
+    </div>
+  </div>
+
   <!-- Section : À propos -->
   <section id="apropos" class="section section-about">
     <div class="wrap about-grid">
@@ -215,14 +222,21 @@
             Adelyss Events accompagne les entreprises dans la conception d’événements élégants, cohérents et adaptés à leurs objectifs, qu’il s’agisse de fédérer une équipe, valoriser une entreprise, accueillir de nouveaux collaborateurs ou célébrer une étape clé.
           </p>
         </div>
+
+        <div class="about-highlights-pills">
+          <span class="pill-item">✨ Organisation Corporate sur mesure</span>
+          <span class="pill-item">📍 Sousse & toute la Tunisie</span>
+          <span class="pill-item">🎯 Coordination Jour J</span>
+        </div>
       </div>
 
       <aside class="about-aside">
-        <div class="about-panel">
-          <p class="panel-quote">« Vous avez l’idée ?<br>Nous créons l’expérience. »</p>
-          <p class="panel-meta">— L'engagement Adelyss Events</p>
-          <div class="about-pill-signature">
-            <span>Lieu</span> • <span>Concept</span> • <span>Scénographie</span> • <span>Coordination Jour J</span>
+        <div class="about-poster-card" (click)="openImageModal('/assets/adelyss-corporate-poster.jpg')">
+          <div class="poster-zoom-badge">🔍 Cliquer pour agrandir l'affiche</div>
+          <img src="/assets/adelyss-corporate-poster.jpg" alt="Adelyss Events - Organisation d'événements Corporate sur mesure" class="about-poster-img" />
+          <div class="poster-footer-caption">
+            <strong>Des événements qui ont du sens</strong>
+            <p>Conférences · Team Building · Séminaires · Inaugurations · Buffets</p>
           </div>
         </div>
       </aside>
@@ -466,6 +480,10 @@
             <strong>Téléphone</strong><br />
             <a href="tel:+21625944684">25 944 684</a>
           </li>
+          <li>
+            <strong>Adresse</strong><br />
+            <span>Imm. Espace Sousse - Cité Turki - 4000 Sousse</span>
+          </li>
         </ul>
         <p class="api-demo">
           <button type="button" class="btn btn-text" (click)="checkApi()">Tester la connexion API</button>
@@ -600,3 +618,12 @@
     <p class="footer-copy">© {{ year }} Adelyss Events — Démonstration landing page</p>
   </div>
 </footer>
+
+@if (activeModalImage) {
+  <div class="image-lightbox-overlay" (click)="closeImageModal()">
+    <div class="image-lightbox-card" (click)="$event.stopPropagation()">
+      <button class="image-lightbox-close" (click)="closeImageModal()" aria-label="Fermer la vue">✕</button>
+      <img [src]="activeModalImage" alt="Affiche corporate plein écran Adelyss Events" class="lightbox-img" />
+    </div>
+  </div>
+}

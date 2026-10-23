@@ -136,6 +136,16 @@ De l'accueil des participants à la coordination sur place, nous veillons à ce 
     this.prestations[index].expanded = !this.prestations[index].expanded;
   }
 
+  activeModalImage: string | null = null;
+
+  openImageModal(src: string): void {
+    this.activeModalImage = src;
+  }
+
+  closeImageModal(): void {
+    this.activeModalImage = null;
+  }
+
   services: {title: string, text: string, icon?: string}[] = [];
 
   readonly news = [
