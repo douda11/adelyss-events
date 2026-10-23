@@ -48,10 +48,10 @@
 
         <!-- Raccourcis d'accès rapide -->
         <div class="hero-quick-nav">
-          <div class="quick-nav-card" (click)="setSection('pourquoi-un-evenement')">
-            <span class="quick-icon">🤝</span>
-            <strong>Pourquoi un événement ?</strong>
-            <p>Renforcer la cohésion de vos équipes</p>
+          <div class="quick-nav-card" (click)="setSection('apropos')">
+            <span class="quick-icon">✨</span>
+            <strong>À propos de l'agence</strong>
+            <p>Notre vision &amp; nos engagements</p>
           </div>
           <div class="quick-nav-card" (click)="setSection('prestations')">
             <span class="quick-icon">🏢</span>
@@ -63,10 +63,10 @@
             <strong>Notre accompagnement</strong>
             <p>5 étapes clés de A à Z</p>
           </div>
-          <div class="quick-nav-card" (click)="setSection('apropos')">
-            <span class="quick-icon">✨</span>
-            <strong>À propos de l'agence</strong>
-            <p>Notre vision &amp; engagements</p>
+          <div class="quick-nav-card" (click)="setSection('evenements-passes')">
+            <span class="quick-icon">🤝</span>
+            <strong>Nos événements</strong>
+            <p>Pourquoi &amp; réalisations en images</p>
           </div>
         </div>
       </div>
@@ -74,45 +74,54 @@
   }
 
   <!-- ==========================================
-       SECTION 2 : POURQUOI UN ÉVÉNEMENT ?
+       SECTION 2 : À PROPOS (Directement après Accueil)
        ========================================== -->
-  @if (activeSection === 'pourquoi-un-evenement') {
-    <section id="pourquoi-un-evenement" class="section section-why-event">
-      <div class="wrap">
-        <div class="why-header">
-          <p class="eyebrow-gold">POURQUOI ORGANISER UN ÉVÉNEMENT POUR SES ÉQUIPES ?</p>
-          <h2 class="section-title">Parce qu’une équipe ne se construit pas uniquement autour d’un bureau, de réunions et d’objectifs à atteindre.</h2>
-          <p class="section-intro">
-            Un événement professionnel permet de sortir du quotidien, créer du lien et offrir aux collaborateurs un autre cadre pour se retrouver et échanger.
-          </p>
-          <p class="why-subintro">
-            Un team building, un séminaire, une journée d’équipe ou simplement un moment convivial peut contribuer à :
-          </p>
+  @if (activeSection === 'apropos') {
+    <!-- Ruban signature officiel calligraphie dorée -->
+    <div class="brand-ribbon-divider">
+      <div class="wrap text-center">
+        <img src="/assets/adelyss-signature-banner.jpg" alt="Calligraphie officielle Adelyss Events" class="ribbon-signature-img" />
+      </div>
+    </div>
+
+    <section id="apropos" class="section section-about">
+      <div class="wrap about-grid">
+        <div class="about-content-left">
+          <p class="eyebrow-gold">À PROPOS</p>
+          <h2 class="section-title text-center">Transformer chaque événement en une expérience qui a du sens et qui marque les esprits.</h2>
+          
+          <div class="about-text-blocks">
+            <p>
+              <strong>Adelyss Events</strong> est une agence événementielle qui imagine, organise et coordonne des événements professionnels sur mesure.
+            </p>
+            <p>
+              Notre ambition est simple : <em>transformer chaque événement en une expérience qui a du sens et qui marque les esprits</em>.
+            </p>
+            <p>
+              Parce qu’un événement professionnel ne se résume pas à un lieu, une décoration ou un programme, nous accordons une attention particulière à chaque détail : <strong>l’accueil, l’ambiance, l’organisation, les animations et l’expérience vécue par les participants</strong>.
+            </p>
+            <p>
+              Adelyss Events accompagne les entreprises dans la conception d’événements élégants, cohérents et adaptés à leurs objectifs, qu’il s’agisse de fédérer une équipe, valoriser une entreprise, accueillir de nouveaux collaborateurs ou célébrer une étape clé.
+            </p>
+          </div>
+
+          <div class="about-highlights-pills">
+            <span class="pill-item">✨ Organisation Corporate sur mesure</span>
+            <span class="pill-item">📍 Sousse &amp; toute la Tunisie</span>
+            <span class="pill-item">🎯 Coordination Jour J</span>
+          </div>
         </div>
 
-        <div class="why-cards-grid">
-          <article class="why-card">
-            <div class="why-icon-badge">🤝</div>
-            <h3>Renforcer la cohésion</h3>
-            <p>Créer des interactions différentes et favoriser une meilleure connaissance entre les membres de l’équipe.</p>
-          </article>
-
-          <article class="why-card">
-            <div class="why-icon-badge">💬</div>
-            <h3>Faciliter les échanges</h3>
-            <p>Offrir un cadre moins formel, propice au partage d'idées, à la confiance et à une communication fluide.</p>
-          </article>
-
-          <article class="why-card">
-            <div class="why-icon-badge">🎯</div>
-            <h3>Fédérer et motiver</h3>
-            <p>Valoriser les collaborateurs, célébrer les réussites communes et stimuler une dynamique collective durable.</p>
-          </article>
-        </div>
-
-        <div class="section-nav-footer text-center" style="margin-top: 3.5rem;">
-          <a class="btn btn-gold" (click)="setSection('prestations')" style="cursor:pointer">Découvrir nos prestations adaptées ➔</a>
-        </div>
+        <aside class="about-aside">
+          <div class="about-poster-card" (click)="openImageModal('/assets/adelyss-corporate-poster.jpg')">
+            <div class="poster-zoom-badge">🔍 Cliquer pour agrandir l'affiche</div>
+            <img src="/assets/adelyss-corporate-poster.jpg" alt="Adelyss Events - Organisation d'événements Corporate sur mesure" class="about-poster-img" />
+            <div class="poster-footer-caption text-center">
+              <strong>Des événements qui ont du sens</strong>
+              <p>Conférences · Team Building · Séminaires · Inaugurations · Buffets</p>
+            </div>
+          </div>
+        </aside>
       </div>
     </section>
   }
@@ -233,7 +242,7 @@
           }
         </div>
 
-        <div class="process-cta-box">
+        <div class="process-cta-box text-center">
           <p class="process-cta-text">Vous avez un projet en tête ? Parlons-en ensemble.</p>
           <a (click)="setSection('contact')" class="btn btn-gold" style="cursor:pointer">1. Démarrer par un échange sur votre projet</a>
         </div>
@@ -242,54 +251,90 @@
   }
 
   <!-- ==========================================
-       SECTION 5 : À PROPOS
+       SECTION 5 : ÉVÉNEMENTS (Avec "Pourquoi un événement" en intro)
        ========================================== -->
-  @if (activeSection === 'apropos') {
-    <!-- Ruban signature officiel calligraphie dorée -->
-    <div class="brand-ribbon-divider">
-      <div class="wrap text-center">
-        <img src="/assets/adelyss-signature-banner.jpg" alt="Calligraphie officielle Adelyss Events" class="ribbon-signature-img" />
-      </div>
-    </div>
-
-    <section id="apropos" class="section section-about">
-      <div class="wrap about-grid">
-        <div class="about-content-left">
-          <p class="eyebrow-gold">À PROPOS</p>
-          <h2 class="section-title">Transformer chaque événement en une expérience qui a du sens et qui marque les esprits.</h2>
-          
-          <div class="about-text-blocks">
-            <p>
-              <strong>Adelyss Events</strong> est une agence événementielle qui imagine, organise et coordonne des événements professionnels sur mesure.
-            </p>
-            <p>
-              Notre ambition est simple : <em>transformer chaque événement en une expérience qui a du sens et qui marque les esprits</em>.
-            </p>
-            <p>
-              Parce qu’un événement professionnel ne se résume pas à un lieu, une décoration ou un programme, nous accordons une attention particulière à chaque détail : <strong>l’accueil, l’ambiance, l’organisation, les animations et l’expérience vécue par les participants</strong>.
-            </p>
-            <p>
-              Adelyss Events accompagne les entreprises dans la conception d’événements élégants, cohérents et adaptés à leurs objectifs, qu’il s’agisse de fédérer une équipe, valoriser une entreprise, accueillir de nouveaux collaborateurs ou célébrer une étape clé.
-            </p>
-          </div>
-
-          <div class="about-highlights-pills">
-            <span class="pill-item">✨ Organisation Corporate sur mesure</span>
-            <span class="pill-item">📍 Sousse &amp; toute la Tunisie</span>
-            <span class="pill-item">🎯 Coordination Jour J</span>
-          </div>
+  @if (activeSection === 'evenements-passes' || activeSection === 'pourquoi-un-evenement') {
+    <!-- 1. En intro : Pourquoi organiser un événement pour ses équipes ? -->
+    <section id="pourquoi-un-evenement" class="section section-why-event">
+      <div class="wrap">
+        <div class="why-header">
+          <p class="eyebrow-gold">POURQUOI ORGANISER UN ÉVÉNEMENT POUR SES ÉQUIPES ?</p>
+          <h2 class="section-title">Parce qu’une équipe ne se construit pas uniquement autour d’un bureau, de réunions et d’objectifs à atteindre.</h2>
+          <p class="section-intro">
+            Un événement professionnel permet de sortir du quotidien, créer du lien et offrir aux collaborateurs un autre cadre pour se retrouver et échanger.
+          </p>
+          <p class="why-subintro">
+            Un team building, un séminaire, une journée d’équipe ou simplement un moment convivial peut contribuer à :
+          </p>
         </div>
 
-        <aside class="about-aside">
-          <div class="about-poster-card" (click)="openImageModal('/assets/adelyss-corporate-poster.jpg')">
-            <div class="poster-zoom-badge">🔍 Cliquer pour agrandir l'affiche</div>
-            <img src="/assets/adelyss-corporate-poster.jpg" alt="Adelyss Events - Organisation d'événements Corporate sur mesure" class="about-poster-img" />
-            <div class="poster-footer-caption">
-              <strong>Des événements qui ont du sens</strong>
-              <p>Conférences · Team Building · Séminaires · Inaugurations · Buffets</p>
-            </div>
-          </div>
-        </aside>
+        <div class="why-cards-grid">
+          <article class="why-card">
+            <div class="why-icon-badge">🤝</div>
+            <h3>Renforcer la cohésion</h3>
+            <p>Créer des interactions différentes et favoriser une meilleure connaissance entre les membres de l’équipe.</p>
+          </article>
+
+          <article class="why-card">
+            <div class="why-icon-badge">💬</div>
+            <h3>Faciliter les échanges</h3>
+            <p>Offrir un cadre moins formel, propice au partage d'idées, à la confiance et à une communication fluide.</p>
+          </article>
+
+          <article class="why-card">
+            <div class="why-icon-badge">🎯</div>
+            <h3>Fédérer et motiver</h3>
+            <p>Valoriser les collaborateurs, célébrer les réussites communes et stimuler une dynamique collective durable.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. En suite : Galerie des événements passés -->
+    <section id="evenements-passes" class="section section-past-events">
+      <div class="wrap">
+        <div class="text-center" style="margin-bottom: 2.5rem;">
+          <p class="eyebrow-gold">PORTFOLIO &amp; RETOURS D'EXPÉRIENCE</p>
+          <h2 class="section-title">Nos événements passés en images</h2>
+          <p class="section-intro">
+            Découvrez nos réalisations précédentes : découpage logistique, coordination sur mesure et moments forts capturés en photos et vidéos.
+          </p>
+        </div>
+        <div class="grid-3">
+          @for (event of pastEvents; track event.title) {
+            <article class="card card-media">
+              @if (event.type === 'video') {
+                <div class="media-frame media-video">
+                  <video [src]="event.mediaUrl" controls preload="metadata"></video>
+                </div>
+              } @else {
+                <img [src]="event.mediaUrl" [alt]="event.title" class="media-image" loading="lazy" />
+              }
+              <h3>{{ event.title }}</h3>
+              <p class="news-date">{{ event.type === 'video' ? 'Vidéo' : 'Photo' }}</p>
+              <p>{{ event.description }}</p>
+            </article>
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Actualités & Blog -->
+    <section id="actualites" class="section section-news">
+      <div class="wrap">
+        <div class="text-center" style="margin-bottom: 2.5rem;">
+          <h2 class="section-title">Actualités &amp; blog</h2>
+          <p class="section-intro">Idées, retours d’expérience et coulisses de nos événements professionnels.</p>
+        </div>
+        <div class="grid-3">
+          @for (n of news; track n.title) {
+            <article class="card card-news">
+              <span class="news-date">{{ n.date }}</span>
+              <h3>{{ n.title }}</h3>
+              <a href="#" class="text-link">Lire la suite</a>
+            </article>
+          }
+        </div>
       </div>
     </section>
   }
@@ -300,10 +345,13 @@
   @if (activeSection === 'equipe') {
     <section id="equipe" class="section section-team">
       <div class="wrap">
-        <h2 class="section-title">Notre équipe</h2>
-        <p class="section-intro">
-          Une équipe pluridisciplinaire qui travaille en synergie pour garantir des événements réussis.
-        </p>
+        <div class="text-center" style="margin-bottom: 2.5rem;">
+          <p class="eyebrow-gold">LES TALENTS DE L'AGENCE</p>
+          <h2 class="section-title">Notre équipe</h2>
+          <p class="section-intro">
+            Une équipe pluridisciplinaire et passionnée qui travaille en synergie pour garantir des événements réussis.
+          </p>
+        </div>
         <div class="grid-3">
           @for (member of teamMembers; track member.role) {
             <article class="card">
@@ -323,12 +371,13 @@
     <section id="recrutement" class="section section-recruitment">
       <div class="wrap recruitment-grid">
         <div>
-          <h2 class="section-title">Recrutement</h2>
-          <p class="section-intro">
-            Rejoignez-nous : consultez nos offres d’emploi et déposez votre CV.
+          <p class="eyebrow-gold">CARRIÈRES &amp; TALENTS</p>
+          <h2 class="section-title text-left">Recrutement</h2>
+          <p class="section-intro text-left" style="margin: 0 0 2rem 0;">
+            Rejoignez l'aventure Adelyss Events : consultez nos opportunités d'emploi ou déposez votre candidature spontanée.
           </p>
 
-          <h3 class="subsection-title">Offres d'emploi</h3>
+          <h3 class="subsection-title">Offres d'emploi en cours</h3>
           <div class="job-list">
             @for (offer of jobOffers; track offer.title) {
               <article class="card card-job">
@@ -391,61 +440,18 @@
   }
 
   <!-- ==========================================
-       SECTION 8 : ÉVÉNEMENTS PASSÉS & ACTUALITÉS
-       ========================================== -->
-  @if (activeSection === 'evenements-passes') {
-    <section id="evenements-passes" class="section section-past-events">
-      <div class="wrap">
-        <h2 class="section-title">Événements passés</h2>
-        <p class="section-intro">
-          Un espace dédié à nos réalisations précédentes, avec photos et vidéos.
-        </p>
-        <div class="grid-3">
-          @for (event of pastEvents; track event.title) {
-            <article class="card card-media">
-              @if (event.type === 'video') {
-                <div class="media-frame media-video">
-                  <video [src]="event.mediaUrl" controls preload="metadata"></video>
-                </div>
-              } @else {
-                <img [src]="event.mediaUrl" [alt]="event.title" class="media-image" loading="lazy" />
-              }
-              <h3>{{ event.title }}</h3>
-              <p class="news-date">{{ event.type === 'video' ? 'Vidéo' : 'Photo' }}</p>
-              <p>{{ event.description }}</p>
-            </article>
-          }
-        </div>
-      </div>
-    </section>
-
-    <section id="actualites" class="section section-news">
-      <div class="wrap">
-        <h2 class="section-title">Actualités &amp; blog</h2>
-        <p class="section-intro">Idées, retours d’expérience et coulisses de nos événements.</p>
-        <div class="grid-3">
-          @for (n of news; track n.title) {
-            <article class="card card-news">
-              <span class="news-date">{{ n.date }}</span>
-              <h3>{{ n.title }}</h3>
-              <a href="#" class="text-link">Lire la suite</a>
-            </article>
-          }
-        </div>
-      </div>
-    </section>
-  }
-
-  <!-- ==========================================
-       SECTION 9 : PARTENARIATS & SPONSORS
+       SECTION 8 : PARTENARIATS & SPONSORS
        ========================================== -->
   @if (activeSection === 'partenariats') {
     <section id="partenariats" class="section section-partners">
       <div class="wrap partners-inner">
-        <h2 class="section-title">Partenariats &amp; sponsors</h2>
-        <p class="section-intro">
-          Vous souhaitez associer votre marque à des événements de qualité ou sponsoriser une opération ?
-        </p>
+        <div class="text-center" style="margin-bottom: 2.5rem;">
+          <p class="eyebrow-gold">COLLABORATION B2B</p>
+          <h2 class="section-title">Partenariats &amp; sponsors</h2>
+          <p class="section-intro">
+            Vous souhaitez associer votre marque à des événements professionnels d'envergure ou sponsoriser une opération ?
+          </p>
+        </div>
 
         @if (partners && partners.length > 0) {
           <div class="partners-logos" style="display: flex; gap: 2rem; flex-wrap: wrap; justify-content: center; margin-bottom: 3rem;">
@@ -520,13 +526,16 @@
   }
 
   <!-- ==========================================
-       SECTION 10 : TÉMOIGNAGES
+       SECTION 9 : TÉMOIGNAGES
        ========================================== -->
   @if (activeSection === 'temoignages') {
     <section id="temoignages" class="section section-testimonials">
       <div class="wrap">
-        <h2 class="section-title">Ils nous font confiance</h2>
-        <p class="section-intro">Témoignages de clients professionnels, associatifs et privés.</p>
+        <div class="text-center" style="margin-bottom: 2.5rem;">
+          <p class="eyebrow-gold">AVIS &amp; RETOURS</p>
+          <h2 class="section-title">Ils nous font confiance</h2>
+          <p class="section-intro">Témoignages de clients professionnels, associatifs et privés.</p>
+        </div>
         <div class="grid-3">
           @for (t of testimonials; track t.author) {
             <blockquote class="quote-card">
@@ -540,16 +549,16 @@
   }
 
   <!-- ==========================================
-       SECTION 11 : CONTACT & DEVIS
+       SECTION 10 : CONTACT & DEVIS
        ========================================== -->
   @if (activeSection === 'contact') {
     <section id="contact" class="section section-contact">
       <div class="wrap contact-grid">
         <div>
-          <h2 class="section-title">Contact</h2>
-          <p class="section-intro">
-            Formulaire de contact, demande de devis ou candidature : écrivez-nous, nous revenons vers vous
-            rapidement.
+          <p class="eyebrow-gold text-left">CONTACTEZ-NOUS</p>
+          <h2 class="section-title text-left">Contact</h2>
+          <p class="section-intro text-left" style="margin: 0 0 2rem 0;">
+            Formulaire de contact, demande de devis ou questionnement : écrivez-nous, notre équipe revient vers vous sous 24 heures.
           </p>
           <ul class="contact-list">
             <li>
@@ -615,9 +624,10 @@
     <section id="devis" class="section section-quote">
       <div class="wrap quote-grid">
         <div>
-          <h2 class="section-title">Demande de devis</h2>
-          <p class="section-intro">
-            Décrivez votre besoin et recevez une proposition adaptée à votre événement.
+          <p class="eyebrow-gold text-left">ESTIMATION GRATUITE</p>
+          <h2 class="section-title text-left">Demande de devis</h2>
+          <p class="section-intro text-left" style="margin: 0 0 2rem 0;">
+            Décrivez votre projet et recevez une proposition chiffrée détaillée adaptée à vos objectifs et votre budget.
           </p>
         </div>
         <form class="contact-form" [formGroup]="quoteForm" (ngSubmit)="onSubmitQuote()">
@@ -644,7 +654,7 @@
           </label>
           <label>
             <span>Type d'événement</span>
-            <input type="text" formControlName="eventType" placeholder="Corporate, mariage, associatif..." />
+            <input type="text" formControlName="eventType" placeholder="Corporate, séminaire, team building..." />
             @if (quoteForm.controls.eventType.touched && quoteForm.controls.eventType.invalid) {
               <small class="error">Champ requis</small>
             }

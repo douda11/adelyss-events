@@ -19,13 +19,12 @@ export class LandingPageComponent implements OnInit {
 
   readonly navLinks = [
     { id: 'accueil', label: 'Accueil' },
-    { id: 'pourquoi-un-evenement', label: 'Pourquoi un événement ?' },
+    { id: 'apropos', label: 'À propos' },
     { id: 'prestations', label: 'Nos prestations' },
     { id: 'accompagnement', label: 'Notre accompagnement' },
-    { id: 'apropos', label: 'À propos' },
+    { id: 'evenements-passes', label: 'Événements' },
     { id: 'equipe', label: 'Notre équipe' },
     { id: 'recrutement', label: 'Recrutement' },
-    { id: 'evenements-passes', label: 'Événements' },
     { id: 'partenariats', label: 'Partenariats' },
     { id: 'temoignages', label: 'Témoignages' },
     { id: 'contact', label: 'Contact' },
