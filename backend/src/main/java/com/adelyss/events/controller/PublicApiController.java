@@ -74,6 +74,12 @@ public class PublicApiController {
     return partnerRepository.findAll();
   }
 
+  @GetMapping("/public/clients")
+  public List<Partner> getPublicClients() {
+    return partnerRepository.findByType("CLIENT");
+  }
+
+
   @GetMapping("/public/services")
   public List<ServiceOffer> getPublicServices() {
     return serviceOfferRepository.findByActiveTrueOrderByDisplayOrderAsc();

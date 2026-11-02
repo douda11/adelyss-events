@@ -23,10 +23,14 @@ import { AdminEvent, AdminEventService } from './admin-event.service';
 
     <div class="grid-cards">
       <article class="event-card" *ngFor="let event of events">
-        <div class="card-img" [style.backgroundImage]="'url(' + (event.imageUrl || '/assets/placeholder-event.jpg') + ')'">
+        <div class="card-img" [class.is-video]="isVideo(event.imageUrl)">
+          <video *ngIf="isVideo(event.imageUrl)" [src]="event.imageUrl" class="card-video-media" muted preload="metadata"></video>
+          <img *ngIf="!isVideo(event.imageUrl) && event.imageUrl" [src]="event.imageUrl" [alt]="event.title" class="card-photo-media" />
+          <div *ngIf="!event.imageUrl" class="card-media-placeholder">📷 Pas de média</div>
           <span class="status-badge" [class.past]="event.status === 'PAST'">
             {{ event.status === 'PAST' ? 'Passé' : 'À venir' }}
           </span>
+          <span class="media-type-pill" *ngIf="isVideo(event.imageUrl)">🎥 Vidéo</span>
         </div>
         <div class="card-body">
           <h3>{{ event.title }}</h3>
@@ -37,8 +41,8 @@ import { AdminEvent, AdminEventService } from './admin-event.service';
           <p class="desc">{{ event.description | slice:0:80 }}...</p>
         </div>
         <div class="card-actions">
-          <button class="icon-btn edit" (click)="openForm(event)">✏️</button>
-          <button class="icon-btn delete" (click)="deleteEvent(event.id)">🗑️</button>
+          <button class="icon-btn edit" (click)="openForm(event)" title="Modifier">✏️</button>
+          <button class="icon-btn delete" (click)="deleteEvent(event.id)" title="Supprimer">🗑️</button>
         </div>
       </article>
 
@@ -67,7 +71,7 @@ import { AdminEvent, AdminEventService } from './admin-event.service';
 
           <label>
             Lieu
-            <input type="text" formControlName="location" placeholder="Ex: Paris, France" />
+            <input type="text" formControlName="location" placeholder="Ex: Sousse, Tunisie" />
           </label>
 
           <label>
@@ -79,19 +83,24 @@ import { AdminEvent, AdminEventService } from './admin-event.service';
             <label>
               Statut
               <select formControlName="status">
+                <option value="PAST">Passé (Affiché dans Réalisations)</option>
                 <option value="UPCOMING">À venir</option>
-                <option value="PAST">Passé</option>
               </select>
             </label>
             
             <label>
-              Image (URL ou Upload)
+              Photo ou Vidéo (Fichier ou URL)
               <div class="upload-group">
-                <input type="text" formControlName="imageUrl" placeholder="https://..." />
-                <button type="button" class="upload-btn" (click)="fileInput.click()">📁</button>
-                <input type="file" #fileInput hidden (change)="onFileSelected($event)" accept="image/*" />
+                <input type="text" formControlName="imageUrl" placeholder="https://... ou cliquez sur 📁" />
+                <button type="button" class="upload-btn" (click)="fileInput.click()" title="Choisir un fichier">📁 Parcourir</button>
+                <input type="file" #fileInput hidden (change)="onFileSelected($event)" accept="image/*,video/*" />
               </div>
-              <small *ngIf="uploading">Upload en cours...</small>
+              <div *ngIf="eventForm.value.imageUrl" class="media-preview-box">
+                <video *ngIf="isVideo(eventForm.value.imageUrl)" [src]="eventForm.value.imageUrl" class="preview-thumb" controls></video>
+                <img *ngIf="!isVideo(eventForm.value.imageUrl)" [src]="eventForm.value.imageUrl" class="preview-thumb" alt="Aperçu" />
+                <span class="preview-label">✓ Média attaché ({{ isVideo(eventForm.value.imageUrl) ? 'Vidéo' : 'Photo' }})</span>
+              </div>
+              <small *ngIf="uploading" class="status">⏳ Envoi du média en cours...</small>
             </label>
           </div>
 
@@ -102,6 +111,7 @@ import { AdminEvent, AdminEventService } from './admin-event.service';
             </button>
           </div>
         </form>
+
       </div>
     </div>
   `,
@@ -189,9 +199,34 @@ import { AdminEvent, AdminEventService } from './admin-event.service';
       }
       .card-img {
         height: 180px;
-        background-size: cover;
-        background-position: center;
         position: relative;
+        overflow: hidden;
+        background: #0f172a;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .card-video-media, .card-photo-media {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .card-media-placeholder {
+        color: #94a3b8;
+        font-weight: 600;
+        font-size: 0.9rem;
+      }
+      .media-type-pill {
+        position: absolute;
+        bottom: 0.8rem;
+        left: 0.8rem;
+        background: rgba(0,0,0,0.75);
+        color: #d4af37;
+        font-size: 0.75rem;
+        font-weight: 700;
+        padding: 0.25rem 0.6rem;
+        border-radius: 6px;
+        backdrop-filter: blur(4px);
       }
       .status-badge {
         position: absolute;
@@ -204,14 +239,38 @@ import { AdminEvent, AdminEventService } from './admin-event.service';
         font-size: 0.75rem;
         font-weight: 700;
         box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        z-index: 2;
       }
       .status-badge.past {
         background: #64748b;
+      }
+      .media-preview-box {
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+        background: #f8fafc;
+        border: 1px dashed #d4af37;
+        padding: 0.6rem 0.8rem;
+        border-radius: 8px;
+        margin-top: 0.5rem;
+      }
+      .preview-thumb {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+        border-radius: 8px;
+        border: 1px solid #d4af37;
+      }
+      .preview-label {
+        font-size: 0.85rem;
+        color: #10b981;
+        font-weight: 600;
       }
       .card-body {
         padding: 1.5rem;
         flex: 1;
       }
+
       .card-body h3 {
         margin: 0 0 0.5rem;
         font-size: 1.25rem;
@@ -419,6 +478,12 @@ export class AdminEventsComponent implements OnInit {
     }
   }
 
+  isVideo(url?: string | null): boolean {
+    if (!url) return false;
+    const lower = url.toLowerCase();
+    return lower.endsWith('.mp4') || lower.endsWith('.webm') || lower.endsWith('.mov') || lower.endsWith('.avi');
+  }
+
   deleteEvent(id: number) {
     if (confirm('Voulez-vous vraiment supprimer cet événement ?')) {
       this.eventService.deleteEvent(id).subscribe({
@@ -431,3 +496,4 @@ export class AdminEventsComponent implements OnInit {
     }
   }
 }
+

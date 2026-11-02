@@ -20,6 +20,10 @@ public class AdminAuthInterceptor implements HandlerInterceptor {
   @Override
   public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
       throws Exception {
+    if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+      return true;
+    }
+
     String path = request.getRequestURI();
     if ("/api/admin/auth/login".equals(path)) {
       return true;

@@ -41,7 +41,7 @@ public class UploadController {
       String uniqueFilename = UUID.randomUUID().toString() + extension;
       Path filePath = uploadDir.resolve(uniqueFilename);
       
-      Files.copy(file.getInputStream(), filePath);
+      Files.copy(file.getInputStream(), filePath, java.nio.file.StandardCopyOption.REPLACE_EXISTING);
 
       String fileUrl = "/uploads/" + uniqueFilename;
       return ResponseEntity.ok(Collections.singletonMap("url", fileUrl));

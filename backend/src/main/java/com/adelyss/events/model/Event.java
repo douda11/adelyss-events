@@ -46,8 +46,19 @@ public class Event {
   public void setDescription(String description) { this.description = description; }
   public String getImageUrl() { return imageUrl; }
   public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
+  public String getMediaUrl() { return imageUrl; }
+  public String getType() {
+    if (imageUrl != null) {
+      String lower = imageUrl.toLowerCase();
+      if (lower.endsWith(".mp4") || lower.endsWith(".webm") || lower.endsWith(".mov") || lower.endsWith(".avi") || lower.endsWith(".mkv")) {
+        return "video";
+      }
+    }
+    return "photo";
+  }
   public String getStatus() { return status; }
   public void setStatus(String status) { this.status = status; }
   public LocalDateTime getCreatedAt() { return createdAt; }
   public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
 }
+

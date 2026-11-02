@@ -23,17 +23,22 @@ import { AdminTeamMember, AdminTeamService } from './admin-team.service';
 
     <div class="team-grid">
       <article class="team-card" *ngFor="let member of team">
-        <div class="card-avatar" [style.backgroundImage]="'url(' + (member.imageUrl || '/assets/placeholder-avatar.jpg') + ')'">
+        <div class="card-avatar">
+          <img *ngIf="member.imageUrl" [src]="member.imageUrl" [alt]="member.firstName" class="avatar-img" />
+          <div *ngIf="!member.imageUrl" class="avatar-initials">
+            {{ member.firstName.charAt(0) || 'A' }}{{ member.lastName.charAt(0) || 'E' }}
+          </div>
+
           <span class="active-dot" [class.inactive]="!member.active"></span>
         </div>
         <div class="card-body">
           <h3>{{ member.firstName }} {{ member.lastName }}</h3>
           <p class="role">{{ member.role }}</p>
-          <p class="bio">{{ member.bio || 'Aucune biographie.' }}</p>
+          <div class="bio">{{ member.bio || 'Aucune biographie.' }}</div>
         </div>
         <div class="card-actions">
-          <button class="icon-btn edit" (click)="openForm(member)">✏️</button>
-          <button class="icon-btn delete" (click)="deleteMember(member.id)">🗑️</button>
+          <button class="icon-btn edit" (click)="openForm(member)" title="Modifier">✏️</button>
+          <button class="icon-btn delete" (click)="deleteMember(member.id)" title="Supprimer">🗑️</button>
         </div>
       </article>
 
@@ -63,7 +68,7 @@ import { AdminTeamMember, AdminTeamService } from './admin-team.service';
           <div class="form-row">
             <label>
               Rôle / Poste
-              <input type="text" formControlName="role" placeholder="Ex: Chef de projet" />
+              <input type="text" formControlName="role" placeholder="Ex: Fondatrice & CEO" />
             </label>
             <label class="checkbox-label">
               <input type="checkbox" formControlName="active" />
@@ -72,18 +77,22 @@ import { AdminTeamMember, AdminTeamService } from './admin-team.service';
           </div>
 
           <label>
-            Biographie courte
-            <textarea rows="3" formControlName="bio"></textarea>
+            Biographie / Présentation
+            <textarea rows="5" formControlName="bio" placeholder="Présentation du membre (sauter des lignes pour aérer le texte)..."></textarea>
           </label>
 
           <label>
-            Photo de profil (URL ou Upload)
+            Photo de profil (Fichier ou URL)
             <div class="upload-group">
-              <input type="text" formControlName="imageUrl" placeholder="https://..." />
-              <button type="button" class="upload-btn" (click)="fileInput.click()">📁</button>
+              <input type="text" formControlName="imageUrl" placeholder="https://... ou cliquez sur 📁" />
+              <button type="button" class="upload-btn" (click)="fileInput.click()" title="Choisir une photo depuis mon appareil">📁 Parcourir</button>
               <input type="file" #fileInput hidden (change)="onFileSelected($event)" accept="image/*" />
             </div>
-            <small *ngIf="uploading">Upload en cours...</small>
+            <div *ngIf="teamForm.value.imageUrl" class="photo-preview-box">
+              <img [src]="teamForm.value.imageUrl" alt="Aperçu photo" class="preview-img" />
+              <span>✓ Photo sélectionnée</span>
+            </div>
+            <small *ngIf="uploading" class="status">⏳ Envoi de l'image en cours...</small>
           </label>
 
           <div class="modal-actions">
@@ -93,6 +102,7 @@ import { AdminTeamMember, AdminTeamService } from './admin-team.service';
             </button>
           </div>
         </form>
+
       </div>
     </div>
   `,
@@ -177,10 +187,24 @@ import { AdminTeamMember, AdminTeamService } from './admin-team.service';
         height: 100px;
         border-radius: 50%;
         margin: 0 auto 1rem;
-        background-size: cover;
-        background-position: center;
         position: relative;
-        border: 3px solid #f1f5f9;
+        border: 3px solid #d4af37;
+        overflow: hidden;
+        background: #0f172a;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .avatar-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .avatar-initials {
+        color: #d4af37;
+        font-weight: 700;
+        font-size: 1.8rem;
+        letter-spacing: 0.05em;
       }
       .active-dot {
         position: absolute;
@@ -191,12 +215,13 @@ import { AdminTeamMember, AdminTeamService } from './admin-team.service';
         background: #10b981;
         border: 2px solid #fff;
         border-radius: 50%;
+        z-index: 2;
       }
       .active-dot.inactive { background: #cbd5e1; }
       .card-body h3 {
         margin: 0 0 0.2rem;
         color: #0f172a;
-        font-size: 1.1rem;
+        font-size: 1.15rem;
       }
       .role {
         color: #d4af37;
@@ -207,10 +232,42 @@ import { AdminTeamMember, AdminTeamService } from './admin-team.service';
         letter-spacing: 0.05em;
       }
       .bio {
-        color: #64748b;
-        font-size: 0.9rem;
+        color: #334155;
+        font-size: 0.92rem;
         margin-bottom: 1.2rem;
+        line-height: 1.65;
+        white-space: pre-line;
+        text-align: left;
+        background: #f8fafc;
+        padding: 0.8rem 1rem;
+        border-radius: 8px;
+        border: 1px solid #e2e8f0;
+        max-height: 220px;
+        overflow-y: auto;
       }
+      .photo-preview-box {
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+        background: #f8fafc;
+        border: 1px dashed #d4af37;
+        padding: 0.6rem 0.8rem;
+        border-radius: 8px;
+        margin-top: 0.5rem;
+      }
+      .preview-img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid #d4af37;
+      }
+      .photo-preview-box span {
+        font-size: 0.85rem;
+        color: #10b981;
+        font-weight: 600;
+      }
+
       .card-actions {
         display: flex;
         justify-content: center;

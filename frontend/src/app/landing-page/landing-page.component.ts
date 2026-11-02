@@ -182,6 +182,7 @@ De l'accueil des participants à la coordination sur place, nous veillons à ce 
   jobOffers: any[] = [];
   pastEvents: any[] = [];
   partners: any[] = [];
+  clients: any[] = [];
 
   apiStatus: string | null = null;
   quoteStatus: string | null = null;
@@ -193,6 +194,10 @@ De l'accueil des participants à la coordination sur place, nous veillons à ce 
     this.http.get<any[]>('/api/public/team').subscribe({
       next: (data) => this.teamMembers = data,
       error: () => console.error('Failed to load team')
+    });
+    this.http.get<any[]>('/api/public/clients').subscribe({
+      next: (data) => this.clients = data,
+      error: () => console.error('Failed to load clients')
     });
     this.http.get<any[]>('/api/public/job-offers').subscribe({
       next: (data) => this.jobOffers = data,
@@ -206,6 +211,7 @@ De l'accueil des participants à la coordination sur place, nous veillons à ce 
       next: (data) => this.partners = data,
       error: () => console.error('Failed to load partners')
     });
+
     this.http.get<any[]>('/api/public/services').subscribe({
       next: (data) => {
         if (data && data.length > 0) {

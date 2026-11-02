@@ -303,15 +303,15 @@
         <div class="grid-3">
           @for (event of pastEvents; track event.title) {
             <article class="card card-media">
-              @if (event.type === 'video') {
+              @if (event.type === 'video' || (event.imageUrl && (event.imageUrl.endsWith('.mp4') || event.imageUrl.endsWith('.webm') || event.imageUrl.endsWith('.mov')))) {
                 <div class="media-frame media-video">
-                  <video [src]="event.mediaUrl" controls preload="metadata"></video>
+                  <video [src]="event.mediaUrl || event.imageUrl" controls preload="metadata"></video>
                 </div>
               } @else {
-                <img [src]="event.mediaUrl" [alt]="event.title" class="media-image" loading="lazy" />
+                <img [src]="event.mediaUrl || event.imageUrl" [alt]="event.title" class="media-image" loading="lazy" />
               }
               <h3>{{ event.title }}</h3>
-              <p class="news-date">{{ event.type === 'video' ? 'Vidéo' : 'Photo' }}</p>
+              <p class="news-date">{{ (event.type === 'video' || (event.imageUrl && (event.imageUrl.endsWith('.mp4') || event.imageUrl.endsWith('.webm')))) ? 'Vidéo' : 'Photo' }}</p>
               <p>{{ event.description }}</p>
             </article>
           }
@@ -352,17 +352,29 @@
             Une équipe pluridisciplinaire et passionnée qui travaille en synergie pour garantir des événements réussis.
           </p>
         </div>
-        <div class="grid-3">
-          @for (member of teamMembers; track member.role) {
-            <article class="card">
-              <h3>{{ member.role }}</h3>
-              <p>{{ member.description }}</p>
+        <div class="public-team-grid">
+          @for (member of teamMembers; track member.id || member.firstName) {
+            <article class="public-team-card">
+              <div class="team-avatar-frame">
+                <img *ngIf="member.imageUrl" [src]="member.imageUrl" [alt]="member.firstName + ' ' + member.lastName" class="team-avatar-photo" />
+                <div *ngIf="!member.imageUrl" class="team-avatar-fallback">
+                  {{ member.firstName?.charAt(0) || 'A' }}{{ member.lastName?.charAt(0) || 'E' }}
+                </div>
+              </div>
+              <div class="team-info-box">
+                <h3 class="team-name">{{ member.firstName }} {{ member.lastName }}</h3>
+                <p class="team-role">{{ member.role }}</p>
+                <div class="team-bio-text">
+                  <p>{{ member.bio }}</p>
+                </div>
+              </div>
             </article>
           }
         </div>
       </div>
     </section>
   }
+
 
   <!-- ==========================================
        SECTION 7 : RECRUTEMENT
@@ -526,16 +538,37 @@
   }
 
   <!-- ==========================================
-       SECTION 9 : TÉMOIGNAGES
+       SECTION 9 : TÉMOIGNAGES & ILS NOUS FONT CONFIANCE
        ========================================== -->
   @if (activeSection === 'temoignages') {
     <section id="temoignages" class="section section-testimonials">
       <div class="wrap">
         <div class="text-center" style="margin-bottom: 2.5rem;">
-          <p class="eyebrow-gold">AVIS &amp; RETOURS</p>
+          <p class="eyebrow-gold">RÉFÉRENCES &amp; PARTENAIRES</p>
           <h2 class="section-title">Ils nous font confiance</h2>
-          <p class="section-intro">Témoignages de clients professionnels, associatifs et privés.</p>
+          <p class="section-intro">
+            Des entreprises, marques et institutions qui nous confient la conception et l'organisation de leurs événements professionnels.
+          </p>
         </div>
+
+        @if (clients && clients.length > 0) {
+          <div class="clients-showcase-grid">
+            @for (c of clients; track c.id) {
+              <div class="client-brand-card" [title]="c.name">
+                <a [href]="c.websiteUrl || '#'" [target]="c.websiteUrl ? '_blank' : '_self'" class="client-brand-link">
+                  <img [src]="c.logoUrl" [alt]="c.name" class="client-brand-logo" />
+                  <span class="client-brand-name">{{ c.name }}</span>
+                </a>
+              </div>
+            }
+          </div>
+        }
+
+        <div class="testimonials-header text-center" style="margin: 3.5rem 0 2rem;">
+          <p class="eyebrow-gold">AVIS &amp; RETOURS</p>
+          <h3 class="subsection-title">Ce que nos clients disent de notre accompagnement</h3>
+        </div>
+
         <div class="grid-3">
           @for (t of testimonials; track t.author) {
             <blockquote class="quote-card">
@@ -547,6 +580,7 @@
       </div>
     </section>
   }
+
 
   <!-- ==========================================
        SECTION 10 : CONTACT & DEVIS
