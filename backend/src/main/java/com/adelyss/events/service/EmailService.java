@@ -1,7 +1,6 @@
 package com.adelyss.events.service;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -24,7 +23,7 @@ public class EmailService {
       MimeMessage message = mailSender.createMimeMessage();
       MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 
-      helper.setFrom("AdelyssEvents <" + fromEmail + ">");
+      helper.setFrom(fromEmail, "Adelyss Events");
       helper.setTo(to);
       helper.setSubject(subject);
 
@@ -45,7 +44,9 @@ public class EmailService {
       helper.setText(htmlBody + signature, true); // true = c'est du HTML
 
       mailSender.send(message);
+      System.out.println("Email sent successfully to: " + to + " (Subject: " + subject + ")");
     } catch (Exception e) {
+      System.err.println("Error sending email to " + to + " (Subject: " + subject + "): " + e.getMessage());
       e.printStackTrace();
     }
   }

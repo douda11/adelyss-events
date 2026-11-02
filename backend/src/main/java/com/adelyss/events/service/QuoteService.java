@@ -53,7 +53,7 @@ public class QuoteService {
         "• Budget estimé : " + (saved.getEstimatedBudget() != null ? saved.getEstimatedBudget() + " TND" : "Non précisé") + "\n\n" +
         "• Détails du besoin :\n" + (saved.getDetails() != null ? saved.getDetails() : "Aucun détail fourni") + "\n\n" +
         "--------------------------------------------------\n" +
-        "Retrouvez ce devis dans votre espace admin : https://visionary-kheer-6d169b.netlify.app/admin/quotes";
+        "Retrouvez ce devis dans votre espace admin : https://adelyss-events.com/admin/quotes";
     try {
       emailService.send("contact@adelyss-events.com", adminSubject, adminBody);
     } catch (Exception e) {

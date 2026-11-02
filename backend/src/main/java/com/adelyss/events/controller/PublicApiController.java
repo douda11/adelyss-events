@@ -142,7 +142,7 @@ public class PublicApiController {
           "• Motivation / Message :\n" + (saved.getMotivation() != null ? saved.getMotivation() : "Non renseignée") + "\n\n" +
           "• Fichier CV enregistré : " + uniqueFilename + "\n\n" +
           "--------------------------------------------------\n" +
-          "Consultez et téléchargez ce CV sur votre espace admin : https://visionary-kheer-6d169b.netlify.app/admin/recruitment/applications";
+          "Consultez et téléchargez ce CV sur votre espace admin : https://adelyss-events.com/admin/recruitment/applications";
       try {
         emailService.send("contact@adelyss-events.com", adminSubject, adminBody);
       } catch (Exception e) {
@@ -183,7 +183,7 @@ public class PublicApiController {
         "• Téléphone : " + (saved.getPhone() != null && !saved.getPhone().trim().isEmpty() ? saved.getPhone() : "Non renseigné") + "\n\n" +
         "• Message du visiteur :\n" + saved.getMessage() + "\n\n" +
         "--------------------------------------------------\n" +
-        "Vous pouvez répondre directement depuis votre espace admin : https://visionary-kheer-6d169b.netlify.app/admin/messages";
+        "Vous pouvez répondre directement depuis votre espace admin : https://adelyss-events.com/admin/messages";
     try {
       emailService.send("contact@adelyss-events.com", adminSubject, adminBody);
     } catch (Exception e) {
