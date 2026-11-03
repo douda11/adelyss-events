@@ -2,6 +2,15 @@
   base = "frontend"
   command = "npm run build"
   publish = "dist/frontend/browser"
+  functions = "netlify/functions"
+
+[functions]
+  directory = "netlify/functions"
+
+[[redirects]]
+  from = "/mail-relay"
+  to = "/.netlify/functions/send-email"
+  status = 200
 
 [[redirects]]
   from = "/api/*"
