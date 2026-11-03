@@ -150,7 +150,7 @@
                   <span class="row-icon">{{ p.icon }}</span>
                   <div class="row-text">
                     <h3 class="row-title">{{ p.title }}</h3>
-                    <p class="row-subtitle">{{ p.subtitle }}</p>
+                    <p class="row-subtitle" *ngIf="p.subtitle">{{ p.subtitle }}</p>
                   </div>
                 </div>
                 <div class="row-right">
@@ -162,6 +162,11 @@
               @if (p.expanded) {
                 <div class="prestation-row-body">
                   <div class="body-inner">
+                    @if (p.imageUrl) {
+                      <div class="body-img-wrap" style="margin-bottom: 1rem; border-radius: 12px; overflow: hidden; max-height: 350px;">
+                        <img [src]="p.imageUrl" [alt]="p.title" style="width: 100%; height: auto; object-fit: cover;" />
+                      </div>
+                    }
                     <div class="body-intro">
                       <p style="white-space: pre-line;">{{ p.intro }}</p>
                     </div>

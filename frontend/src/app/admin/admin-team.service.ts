@@ -43,6 +43,12 @@ export class AdminTeamService {
   uploadImage(file: File): Observable<{url: string}> {
     const formData = new FormData();
     formData.append('file', file);
-    return this.http.post<{url: string}>('/api/admin/upload', formData, { headers: this.authHeaders() });
+    const token = this.authService.getToken() ?? '';
+    // On passe le token dans le query param ET dans le header pour maximal compatibility
+    return this.http.post<{url: string}>(
+      `/api/admin/upload?token=${encodeURIComponent(token)}`,
+      formData,
+      { headers: this.authHeaders() }
+    );
   }
 }

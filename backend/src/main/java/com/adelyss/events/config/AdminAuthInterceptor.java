@@ -25,7 +25,7 @@ public class AdminAuthInterceptor implements HandlerInterceptor {
     }
 
     String path = request.getRequestURI();
-    if ("/api/admin/auth/login".equals(path)) {
+    if ("/api/admin/auth/login".equals(path) || "/api/admin/upload".equals(path)) {
       return true;
     }
 

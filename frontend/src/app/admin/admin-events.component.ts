@@ -2,6 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AdminEvent, AdminEventService } from './admin-event.service';
+import { compressImageFile } from './image-compressor.util';
 
 @Component({
   selector: 'app-admin-events',
@@ -435,16 +436,22 @@ export class AdminEventsComponent implements OnInit {
     this.showForm = false;
   }
 
-  onFileSelected(event: any) {
-    const file: File = event.target.files[0];
+  async onFileSelected(event: any) {
+    let file: File = event.target.files[0];
     if (file) {
       this.uploading = true;
+      try {
+        file = await compressImageFile(file);
+      } catch (e) {
+        console.warn('Compression skipped:', e);
+      }
       this.eventService.uploadImage(file).subscribe({
         next: (res) => {
           this.eventForm.patchValue({ imageUrl: res.url });
           this.uploading = false;
         },
-        error: () => {
+        error: (err) => {
+          console.error('Upload error:', err);
           this.errorMessage = "Erreur lors de l'upload de l'image.";
           this.uploading = false;
         }

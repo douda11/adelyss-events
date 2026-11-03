@@ -2,6 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AdminTeamMember, AdminTeamService } from './admin-team.service';
+import { compressImageFile } from './image-compressor.util';
 
 @Component({
   selector: 'app-admin-team',
@@ -411,16 +412,22 @@ export class AdminTeamComponent implements OnInit {
     this.showForm = false;
   }
 
-  onFileSelected(event: any) {
-    const file: File = event.target.files[0];
+  async onFileSelected(event: any) {
+    let file: File = event.target.files[0];
     if (file) {
       this.uploading = true;
+      try {
+        file = await compressImageFile(file);
+      } catch (e) {
+        console.warn('Compression skipped:', e);
+      }
       this.teamService.uploadImage(file).subscribe({
         next: (res) => {
           this.teamForm.patchValue({ imageUrl: res.url });
           this.uploading = false;
         },
-        error: () => {
+        error: (err) => {
+          console.error('Upload error:', err);
           this.errorMessage = "Erreur lors de l'upload de l'image.";
           this.uploading = false;
         }

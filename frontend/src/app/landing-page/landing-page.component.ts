@@ -68,7 +68,7 @@ export class LandingPageComponent implements OnInit {
     }
   ];
 
-  prestations = [
+  prestations: any[] = [
     {
       id: 'team-building',
       title: 'TEAM BUILDING',
@@ -215,7 +215,19 @@ De l'accueil des participants à la coordination sur place, nous veillons à ce 
     this.http.get<any[]>('/api/public/services').subscribe({
       next: (data) => {
         if (data && data.length > 0) {
-          this.services = data.map(s => ({ title: s.title, text: s.description, icon: s.icon }));
+          this.prestations = data.map((s, idx) => ({
+            id: 'service-' + s.id,
+            title: s.title,
+            subtitle: '',
+            icon: s.icon || '🛎️',
+            intro: s.description || '',
+            imageUrl: s.imageUrl || null,
+            checklistTitle: '',
+            checklist: [],
+            tags: [],
+            goal: '',
+            expanded: idx === 0
+          }));
         }
       },
       error: () => console.error('Failed to load services')

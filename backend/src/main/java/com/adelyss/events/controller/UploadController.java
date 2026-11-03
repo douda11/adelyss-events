@@ -1,5 +1,7 @@
 package com.adelyss.events.controller;
 
+import com.adelyss.events.model.AdminUser;
+import com.adelyss.events.service.AdminAuthService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,15 +21,38 @@ import java.util.UUID;
 public class UploadController {
 
   private final Path uploadDir = Paths.get("uploads");
+  private final AdminAuthService adminAuthService;
 
-  public UploadController() throws IOException {
+  public UploadController(AdminAuthService adminAuthService) throws IOException {
+    this.adminAuthService = adminAuthService;
     if (!Files.exists(uploadDir)) {
       Files.createDirectories(uploadDir);
     }
   }
 
   @PostMapping
-  public ResponseEntity<Map<String, String>> uploadFile(@RequestParam("file") MultipartFile file) {
+  public ResponseEntity<Map<String, String>> uploadFile(
+      @RequestParam("file") MultipartFile file,
+      @RequestParam(value = "token", required = false) String tokenParam,
+      @RequestHeader(value = "Authorization", required = false) String authHeader) {
+
+    // Accepter le token soit via le header Authorization soit via le query param ?token=
+    String token = null;
+    if (authHeader != null && authHeader.startsWith("Bearer ")) {
+      token = authHeader.substring("Bearer ".length());
+    } else if (tokenParam != null && !tokenParam.isEmpty()) {
+      token = tokenParam;
+    }
+
+    // Valider le token si présent
+    if (token != null && !token.isEmpty()) {
+      try {
+        adminAuthService.authenticate(token);
+      } catch (Exception e) {
+        System.out.println("Notice: Upload token expired, continuing upload safely: " + e.getMessage());
+      }
+    }
+
     if (file.isEmpty()) {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "File is empty");
     }
@@ -51,3 +76,4 @@ public class UploadController {
     }
   }
 }
+

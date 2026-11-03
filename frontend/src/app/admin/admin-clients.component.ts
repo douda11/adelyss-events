@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AdminAuthService } from './admin-auth.service';
+import { compressImageFile } from './image-compressor.util';
 
 export interface AdminClient {
   id: number;
@@ -379,18 +380,25 @@ export class AdminClientsComponent implements OnInit {
     this.showForm = false;
   }
 
-  onFileSelected(event: any) {
-    const file: File = event.target.files[0];
+  async onFileSelected(event: any) {
+    let file: File = event.target.files[0];
     if (file) {
       this.uploading = true;
+      try {
+        file = await compressImageFile(file);
+      } catch (e) {
+        console.warn('Compression skipped:', e);
+      }
       const formData = new FormData();
       formData.append('file', file);
-      this.http.post<{url: string}>('/api/admin/upload', formData, { headers: this.authHeaders() }).subscribe({
+      const token = this.authService.getToken() ?? '';
+      this.http.post<{url: string}>(`/api/admin/upload?token=${encodeURIComponent(token)}`, formData, { headers: this.authHeaders() }).subscribe({
         next: (res) => {
           this.clientForm.patchValue({ logoUrl: res.url });
           this.uploading = false;
         },
-        error: () => {
+        error: (err) => {
+          console.error('Upload error:', err);
           this.errorMessage = "Erreur lors de l'upload du logo.";
           this.uploading = false;
         }
