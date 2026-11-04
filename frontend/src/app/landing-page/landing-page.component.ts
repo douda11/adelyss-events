@@ -1,11 +1,11 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-landing-page',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './landing-page.component.html',
   styleUrl: './landing-page.component.scss',
 })
@@ -173,8 +173,8 @@ De l'accueil des participants à la coordination sur place, nous veillons à ce 
     },
     {
       quote:
-        'Mariage de rêve sans stress. Chaque détail était pensé, nous recommandons les yeux fermés.',
-      author: 'Mariés, Tunis',
+        'Un séminaire annuel et un team building parfaitement orchestrés. La cohésion de nos équipes en est sortie grandement renforcée.',
+      author: 'Directrice des Ressources Humaines, Groupe International',
     },
   ];
 
@@ -187,8 +187,14 @@ De l'accueil des participants à la coordination sur place, nous veillons à ce 
   apiStatus: string | null = null;
   quoteStatus: string | null = null;
   recruitmentStatus: string | null = null;
+  contactStatus: string | null = null;
   cvFileName: string | null = null;
   selectedCvFile: File | null = null;
+
+  // Recherche sur le site
+  showSearchModal = false;
+  searchQuery = '';
+  searchResults: { type: string; title: string; subtitle?: string; sectionId: string; icon: string }[] = [];
 
   ngOnInit() {
     this.http.get<any[]>('/api/public/team').subscribe({
@@ -260,6 +266,104 @@ De l'accueil des participants à la coordination sur place, nous veillons à ce 
     motivation: ['', [Validators.required, Validators.minLength(20)]],
   });
 
+  openSearchModal(): void {
+    this.showSearchModal = true;
+    this.searchQuery = '';
+    this.onSearchInput();
+  }
+
+  closeSearchModal(): void {
+    this.showSearchModal = false;
+  }
+
+  selectSearchResult(sectionId: string): void {
+    this.setSection(sectionId);
+    this.closeSearchModal();
+  }
+
+  onSearchInput(): void {
+    const q = this.searchQuery.trim().toLowerCase();
+    if (!q) {
+      this.searchResults = [];
+      return;
+    }
+
+    const results: { type: string; title: string; subtitle?: string; sectionId: string; icon: string }[] = [];
+
+    // 1. Rechercher dans les rubriques
+    const sections = [
+      { id: 'accueil', name: 'Accueil', desc: 'Présentation de l\'agence Adelyss Events et vision événementielle B2B', icon: '✨' },
+      { id: 'apropos', name: 'À propos de l\'agence', desc: 'Notre histoire, expertise événementielle et valeurs', icon: '🏢' },
+      { id: 'prestations', name: 'Nos prestations', desc: 'Séminaires, team building, congrès, lancements et salons', icon: '🛎️' },
+      { id: 'accompagnement', name: 'Notre accompagnement', desc: 'Les 5 étapes clés pour réussir votre projet de A à Z', icon: '📋' },
+      { id: 'evenements-passes', name: 'Événements & Portfolio', desc: 'Photos et vidéos de nos réalisations précédentes', icon: '🎉' },
+      { id: 'equipe', name: 'Notre équipe', desc: 'Direction, coordinateurs et talents événementiels', icon: '👥' },
+      { id: 'recrutement', name: 'Recrutement & Carrières', desc: 'Déposer votre CV et postuler aux offres d\'emploi', icon: '💼' },
+      { id: 'partenariats', name: 'Partenariats & Sponsors', desc: 'Devenir sponsor, prestataire ou partenaire officiel', icon: '🤝' },
+      { id: 'temoignages', name: 'Témoignages & Avis', desc: 'Retours d\'expérience de nos clients professionnels', icon: '⭐' },
+      { id: 'contact', name: 'Contact & Demande de devis', desc: 'Écrivez-nous ou recevez une proposition chiffrée gratuite', icon: '✉️' },
+    ];
+
+    for (const sec of sections) {
+      if (sec.name.toLowerCase().includes(q) || sec.desc.toLowerCase().includes(q)) {
+        results.push({
+          type: 'Rubrique',
+          title: sec.name,
+          subtitle: sec.desc,
+          sectionId: sec.id,
+          icon: sec.icon,
+        });
+      }
+    }
+
+    // 2. Rechercher dans les prestations
+    for (const p of this.prestations) {
+      const matchTitle = p.title && p.title.toLowerCase().includes(q);
+      const matchIntro = p.intro && p.intro.toLowerCase().includes(q);
+      if (matchTitle || matchIntro) {
+        results.push({
+          type: 'Prestation',
+          title: p.title,
+          subtitle: p.intro ? p.intro.slice(0, 100) + '...' : '',
+          sectionId: 'prestations',
+          icon: p.icon || '🛎️',
+        });
+      }
+    }
+
+    // 3. Rechercher dans les événements passés
+    for (const ev of this.pastEvents) {
+      const matchTitle = ev.title && ev.title.toLowerCase().includes(q);
+      const matchDesc = ev.description && ev.description.toLowerCase().includes(q);
+      if (matchTitle || matchDesc) {
+        results.push({
+          type: 'Événement',
+          title: ev.title,
+          subtitle: ev.location ? `${ev.location} - ${ev.date || ''}` : ev.description?.slice(0, 80),
+          sectionId: 'evenements-passes',
+          icon: '📅',
+        });
+      }
+    }
+
+    // 4. Rechercher dans les offres d'emploi
+    for (const job of this.jobOffers) {
+      const matchTitle = job.title && job.title.toLowerCase().includes(q);
+      const matchDesc = job.description && job.description.toLowerCase().includes(q);
+      if (matchTitle || matchDesc) {
+        results.push({
+          type: 'Offre d\'emploi',
+          title: job.title,
+          subtitle: job.location ? `${job.location} · ${job.type || 'CDI'}` : '',
+          sectionId: 'recrutement',
+          icon: '💼',
+        });
+      }
+    }
+
+    this.searchResults = results.slice(0, 8);
+  }
+
   onSubmitContact(): void {
     if (this.contactForm.invalid) {
       this.contactForm.markAllAsTouched();
@@ -268,11 +372,11 @@ De l'accueil des participants à la coordination sur place, nous veillons à ce 
     
     this.http.post('/api/public/contact', this.contactForm.value).subscribe({
       next: () => {
-        alert('Merci ! Votre message a bien été envoyé à notre équipe.');
+        this.contactStatus = 'Votre message a bien été envoyé. Notre équipe vous répondra dans les plus brefs délais.';
         this.contactForm.reset({ subject: 'contact' });
       },
       error: () => {
-        alert('Erreur lors de l\'envoi. Veuillez réessayer plus tard ou redémarrer le backend.');
+        this.contactStatus = 'Erreur lors de l\'envoi du message. Veuillez réessayer ultérieurement.';
       }
     });
   }
@@ -310,12 +414,11 @@ De l'accueil des participants à la coordination sur place, nous veillons à ce 
 
     this.http.post('/api/quotes', this.quoteForm.value).subscribe({
       next: () => {
-        this.quoteStatus = 'Votre demande de devis a bien été envoyée.';
+        this.quoteStatus = 'Votre demande de devis a bien été envoyée avec succès. Notre équipe vous contactera dans les plus brefs délais.';
         this.quoteForm.reset();
       },
       error: () => {
-        this.quoteStatus =
-          'Devis enregistré en mode démo. Branchez le backend sur POST /api/quotes pour la persistance.';
+        this.quoteStatus = 'Erreur lors de l\'envoi de la demande. Veuillez vérifier votre connexion ou nous contacter directement.';
       },
     });
   }
@@ -339,14 +442,13 @@ De l'accueil des participants à la coordination sur place, nous veillons à ce 
 
     this.http.post('/api/recruitment/applications', payload).subscribe({
       next: () => {
-        this.recruitmentStatus = 'Votre candidature a bien été envoyée.';
+        this.recruitmentStatus = 'Votre candidature a bien été envoyée à l\'équipe recrutement et nous vous en remercions.';
         this.recruitmentForm.reset();
         this.selectedCvFile = null;
         this.cvFileName = null;
       },
       error: () => {
-        this.recruitmentStatus =
-          'Candidature enregistrée en mode démo. Branchez le backend sur POST /api/recruitment/applications.';
+        this.recruitmentStatus = 'Erreur lors de l\'envoi de votre candidature. Veuillez réessayer ultérieurement.';
       },
     });
   }

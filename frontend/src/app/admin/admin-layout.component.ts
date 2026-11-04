@@ -19,6 +19,9 @@ import { AdminAuthService } from './admin-auth.service';
         </div>
 
         <nav class="admin-menu">
+          <a routerLink="/admin/dashboard" routerLinkActive="active" class="menu-link">
+            <i class="icon">📊</i> Tableau de bord
+          </a>
           <a routerLink="/admin/quotes" routerLinkActive="active" class="menu-link">
             <i class="icon">✉️</i> Devis
           </a>

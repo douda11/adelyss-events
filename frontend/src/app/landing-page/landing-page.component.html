@@ -16,6 +16,10 @@
       }
     </nav>
     <div class="header-actions">
+      <button type="button" class="btn btn-search-trigger" (click)="openSearchModal()" title="Rechercher sur le site" aria-label="Rechercher">
+        <span class="search-icon">🔍</span>
+        <span class="search-text">Rechercher</span>
+      </button>
       <a class="btn btn-outline-light btn-admin" href="/admin/login">Espace admin</a>
       <a class="btn btn-gold header-cta" (click)="setSection('contact')" style="cursor:pointer">Demander un devis</a>
     </div>
@@ -656,6 +660,9 @@
             }
           </label>
           <button type="submit" class="btn btn-gold btn-block">Envoyer</button>
+          @if (contactStatus) {
+            <p class="api-status" style="margin-top: 1rem; color: #10b981; font-weight: 600; text-align: center;">{{ contactStatus }}</p>
+          }
         </form>
       </div>
     </section>
@@ -756,6 +763,67 @@
     <div class="image-lightbox-card" (click)="$event.stopPropagation()">
       <button class="image-lightbox-close" (click)="closeImageModal()" aria-label="Fermer la vue">✕</button>
       <img [src]="activeModalImage" alt="Affiche corporate plein écran Adelyss Events" class="lightbox-img" />
+    </div>
+  </div>
+}
+
+<!-- Modal de recherche globale sur le site -->
+@if (showSearchModal) {
+  <div class="search-modal-backdrop" (click)="closeSearchModal()">
+    <div class="search-modal-dialog" (click)="$event.stopPropagation()">
+      <div class="search-modal-header">
+        <div class="search-input-box">
+          <span class="search-modal-icon">🔍</span>
+          <input
+            type="text"
+            class="search-modal-input"
+            [(ngModel)]="searchQuery"
+            (input)="onSearchInput()"
+            placeholder="Rechercher une prestation, séminaire, événement, recrutement..."
+            autofocus
+          />
+          @if (searchQuery) {
+            <button type="button" class="clear-btn" (click)="searchQuery = ''; onSearchInput()">✕</button>
+          }
+        </div>
+        <button type="button" class="close-modal-btn" (click)="closeSearchModal()">✕</button>
+      </div>
+
+      <div class="search-modal-body">
+        @if (searchResults.length > 0) {
+          <div class="search-results-list">
+            @for (res of searchResults; track res.title) {
+              <div class="search-result-item" (click)="selectSearchResult(res.sectionId)">
+                <span class="result-badge" [attr.data-type]="res.type">{{ res.type }}</span>
+                <div class="result-info">
+                  <strong class="result-title">{{ res.icon }} {{ res.title }}</strong>
+                  @if (res.subtitle) {
+                    <p class="result-desc">{{ res.subtitle }}</p>
+                  }
+                </div>
+                <span class="result-arrow">→</span>
+              </div>
+            }
+          </div>
+        } @else if (searchQuery.trim().length > 0) {
+          <div class="search-empty-state">
+            <p>Aucun résultat trouvé pour « {{ searchQuery }} »</p>
+            <small>Essayez avec : <em>séminaire, team building, devis, contact, recrutement</em></small>
+          </div>
+        } @else {
+          <div class="search-suggestions">
+            <p class="suggestions-label">Suggestions fréquentes :</p>
+            <div class="suggestion-tags">
+              <button type="button" (click)="searchQuery = 'Séminaire'; onSearchInput()">🏢 Séminaires</button>
+              <button type="button" (click)="searchQuery = 'Team building'; onSearchInput()">🤝 Team Building</button>
+              <button type="button" (click)="searchQuery = 'Inauguration'; onSearchInput()">🎉 Inaugurations</button>
+              <button type="button" (click)="searchQuery = 'Recrutement'; onSearchInput()">💼 Recrutement &amp; CV</button>
+              <button type="button" (click)="searchQuery = 'Devis'; onSearchInput()">📋 Demande de Devis</button>
+              <button type="button" (click)="searchQuery = 'Accompagnement'; onSearchInput()">⚙️ Les 5 étapes</button>
+            </div>
+          </div>
+        }
+      </div>
     </div>
   </div>
 }

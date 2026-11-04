@@ -14,7 +14,8 @@ export const routes: Routes = [
     component: AdminLayoutComponent,
     canActivate: [adminGuard],
     children: [
-      { path: '', redirectTo: 'quotes', pathMatch: 'full' },
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      { path: 'dashboard', loadComponent: () => import('./admin/admin-dashboard.component').then(m => m.AdminDashboardComponent) },
       { path: 'quotes', component: AdminQuotesComponent },
       { path: 'events', loadComponent: () => import('./admin/admin-events.component').then(m => m.AdminEventsComponent) },
       { path: 'team', loadComponent: () => import('./admin/admin-team.component').then(m => m.AdminTeamComponent) },
